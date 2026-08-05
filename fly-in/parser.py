@@ -21,8 +21,6 @@ class Zone:
                  color: str = "white"
     ) -> None:
         self.name = name
-        self.x = x
-        self.y = y
         self.zone_type = zone_type
         self.max_drones = max_drones
         self.color = color
