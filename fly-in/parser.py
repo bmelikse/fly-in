@@ -114,7 +114,3 @@ def split_metadata(line: str) -> tuple[str, dict[str, str]]:
 
     return fixed_part.strip(), metadata
 
-
-if __name__ == "__main__":
-    parse()
-    print(split_metadata("start 0 0 [color=green]"))

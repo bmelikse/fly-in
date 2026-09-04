@@ -1,0 +1,43 @@
+import heapq
+from parser import Map, Zone, Connection
+
+
+def neighbors_of(world: Map, zone_name: str) -> list[str]:
+    """Return the names of all zones directly connected to zone_name."""
+    result = []
+    for connection in world.connections:
+        if connection.zone_a == zone_name:
+            result.append(connection.zone_b)
+        if connection.zone_b == zone_name:
+            result.append(connection.zone_a)
+    return result
+
+def find_shortest_path(world: Map) -> list[str] | None:
+    distances: dict[str, int]= {world.start.name: 0}
+    previous: dict[str, str] = {}
+    queue: list[tuple[int, str]] = [(0, world.start.name)]
+
+    while queue:
+        current_cost, current_zone = heapq.heappop(queue)
+
+        if current_zone == world.end.name:
+            break
+
+        for neighbor_name in neighbors_of(world, current_zone):
+            neighbor_zone = world.zones[neighbor_name]
+            cost = move_cost(neighbor_zone)
+            if cost == -1:
+                continue
+    
+        new_cost = current_cost + cost
+
+
+
+
+def move_cost(zone: Zone)-> int:
+    if zone.zone_type == "blocked":
+        return -1
+    if zone.zone_type == "restricted":
+        return 2
+    return 1
+
