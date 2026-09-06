@@ -28,11 +28,26 @@ def find_shortest_path(world: Map) -> list[str] | None:
             cost = move_cost(neighbor_zone)
             if cost == -1:
                 continue
-    
-        new_cost = current_cost + cost
 
+            new_cost = current_cost + cost
 
+            if neighbor_name not in distances or new_cost < distances[neighbor_name]:
+                distances[neighbor_name] = new_cost
+                previous[neighbor_name] = current_zone
+                heapq.heappush(queue, (new_cost, neighbor_name))
 
+    # no path existing
+    if world.end.name not in previous:
+        return None
+
+    # reconstruct path
+    path = [world.end.name]
+    current = world.end.name
+    while current != world.start.name:
+        current = previous[current]
+        path.append(current)
+    path.reverse()
+    return path
 
 def move_cost(zone: Zone)-> int:
     if zone.zone_type == "blocked":
