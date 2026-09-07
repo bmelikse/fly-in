@@ -73,28 +73,31 @@ def parse() -> Map:
     '''split each line's prefix, give the rest to the right from_line,
     and assemble everything into one Map'''
     world = Map()
-    with open(argv[1], "r") as file:
-        for line in file:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            if line.startswith("nb_drones:"):
-                world.nb_drones = int(line.removeprefix("nb_drones:").strip())
-            elif line.startswith("start_hub:"):
-                zone = Zone.from_line(line.removeprefix("start_hub:").strip())
-                world.zones[zone.name] = zone
-                world.start = zone
-            elif line.startswith("end_hub:"):
-                zone = Zone.from_line(line.removeprefix("end_hub:").strip())
-                world.zones[zone.name] = zone
-                world.end = zone
-            elif line.startswith("hub:"):
-                zone = Zone.from_line(line.removeprefix("hub:").strip())
-                world.zones[zone.name] = zone
-            elif line.startswith("connection:"):
-                conn = Connection.from_line(
-                    line.removeprefix("connection:").strip())
-                world.connections.append(conn)
+    try:
+        with open(argv[1], "r") as file:
+            for line in file:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("nb_drones:"):
+                    world.nb_drones = int(line.removeprefix("nb_drones:").strip())
+                elif line.startswith("start_hub:"):
+                    zone = Zone.from_line(line.removeprefix("start_hub:").strip())
+                    world.zones[zone.name] = zone
+                    world.start = zone
+                elif line.startswith("end_hub:"):
+                    zone = Zone.from_line(line.removeprefix("end_hub:").strip())
+                    world.zones[zone.name] = zone
+                    world.end = zone
+                elif line.startswith("hub:"):
+                    zone = Zone.from_line(line.removeprefix("hub:").strip())
+                    world.zones[zone.name] = zone
+                elif line.startswith("connection:"):
+                    conn = Connection.from_line(
+                        line.removeprefix("connection:").strip())
+                    world.connections.append(conn)
+    except (IndexError, AttributeError) as e:
+        print(f"Error: {e}")
     return world
 
 

@@ -1,5 +1,5 @@
 import heapq
-from parser import Map, Zone, Connection
+from parser import Map, Zone
 
 
 def neighbors_of(world: Map, zone_name: str) -> list[str]:

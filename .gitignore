@@ -1,2 +1,9 @@
 .venv/
+venv/
+env/
+virtualenv/
+.virtualenv/
+__pycache__/
+*.pyc
 .mypy_cache
+.pytest_cache/
