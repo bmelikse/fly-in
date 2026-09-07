@@ -65,9 +65,30 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
     connection_occupancy: dict[str, int] = {}
     turns: list[list[str]] = []
 
+    turn_count = 0
     while not all_delivered(drones):
+        turn_count += 1
+        if turn_count > 200:
+            stuck = []
+            for d in drones:
+                if not d.delivered:
+                    stuck.append(d)
+
+            print(f"STOPPED at turn {turn_count}, {len(stuck)} drones stuck")
+
+            for d in stuck:
+                print(
+                    f"  D{d.drone_id}: path_index={d.path_index}, "
+                    f"at={d.path[d.path_index]}, "
+                    f"in_transit={d.in_transit}, "
+                    f"waited={d.turns_waited}"
+                )
+            break
+
         # movement strings thatll actually get printed for this turn, it appends to the turns at the end
         turn_moves: list[str] = []
+        wanting_to_move: list[DroneState] = []
+
         wanting_to_move: list[DroneState] = []
 
         for drone in drones:
@@ -88,6 +109,7 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
                     turn_moves.append(f"D{drone.drone_id}-{arrived_zone}")
                     if arrived_zone == world.end.name:
                         drone.delivered = True
+                        zone_occupancy[next_zone_name] -= 1
                 continue
 
             wanting_to_move.append(drone)
@@ -171,6 +193,7 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
                 turn_moves.append(f"D{drone.drone_id}-{next_zone_name}")
                 if next_zone_name == world.end.name:
                     drone.delivered = True
+                    zone_occupancy[next_zone_name] -= 1
             else:
                 connection_name = f"{current_zone_name}-{next_zone_name}"
                 drone.in_transit = True
