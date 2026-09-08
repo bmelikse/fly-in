@@ -45,7 +45,7 @@ def all_delivered(drones: list[DroneState]) -> bool:
 def simulate_all_drones(world: Map) -> list[list[str]]:
     path = find_shortest_path(world)
     if path is None:
-        raise ValueError("No path exists between start and end zones")
+        raise ValueError("No path exists between start and end zones!")
 
     drones = []
     for i in range(1, world.nb_drones + 1):
@@ -64,6 +64,8 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
     # same but for connections (how many drones are currently mid-transit thru each one)
     connection_occupancy: dict[str, int] = {}
     turns: list[list[str]] = []
+    zone_reserved: dict[str, int] = {}
+
 
     turn_count = 0
     while not all_delivered(drones):
@@ -104,6 +106,7 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
                     arrived_zone = drone.path[drone.path_index]
                     connection_name = f"{current_zone_name}-{arrived_zone}"
                     connection_occupancy[connection_name] -= 1
+                    zone_reserved[arrived_zone] -= 1
                     zone_occupancy[arrived_zone] = zone_occupancy.get(
                         arrived_zone, 0) + 1
                     turn_moves.append(f"D{drone.drone_id}-{arrived_zone}")
@@ -165,12 +168,20 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
             requesters.sort(key=lambda d: d.turns_waited, reverse=True)
             max_capacity = connection_capacity[connection_name]
             current_usage = connection_occupancy.get(connection_name, 0)
-            free_slots = max_capacity - current_usage
+            conn_free_slots = max_capacity - current_usage
+
+            destination_zone_name = requesters[0].path[requesters[0].path_index + 1]
+            destination_zone = world.zones[destination_zone_name]
+            zone_free_slots = (destination_zone.max_drones
+                               - temp_zone_occupancy.get(destination_zone_name, 0)
+                               - zone_reserved.get(destination_zone_name, 0))
+            free_slots = min(conn_free_slots, zone_free_slots)
             for drone in requesters:
                 if free_slots <= 0:
                     break
                 granted.append(drone)
                 free_slots -= 1
+                zone_reserved[destination_zone_name] = zone_reserved.get(destination_zone_name, 0) + 1 
 
         # commit: granted drones actually move, everyone else waits
         for drone in wanting_to_move:
