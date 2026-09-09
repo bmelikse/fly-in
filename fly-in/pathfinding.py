@@ -12,14 +12,16 @@ def neighbors_of(world: Map, zone_name: str) -> list[str]:
             result.append(connection.zone_a)
     return result
 
-def find_shortest_path(world: Map) -> list[str] | None:
+def find_shortest_path(world: Map,
+                       usage: dict[str, int] | None = None,
+                       penalty: int = 1
+) -> list[str] | None:
     distances: dict[str, int]= {world.start.name: 0}
     previous: dict[str, str] = {}
     queue: list[tuple[int, str]] = [(0, world.start.name)]
 
     while queue:
         current_cost, current_zone = heapq.heappop(queue)
-
         if current_zone == world.end.name:
             break
 
@@ -28,7 +30,8 @@ def find_shortest_path(world: Map) -> list[str] | None:
             cost = move_cost(neighbor_zone)
             if cost == -1:
                 continue
-
+            if usage is not None:
+                cost += usage.get(neighbor_name, 0) * penalty
             new_cost = current_cost + cost
 
             if neighbor_name not in distances or new_cost < distances[neighbor_name]:
