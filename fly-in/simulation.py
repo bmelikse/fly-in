@@ -1,5 +1,5 @@
 from parser import Map, Zone, Connection
-from pathfinding import move_cost, find_shortest_path
+from pathfinding import move_cost, find_shortest_path, assign_diverse_paths
 
 
 class DroneState:
@@ -43,13 +43,10 @@ def all_delivered(drones: list[DroneState]) -> bool:
 
 
 def simulate_all_drones(world: Map) -> list[list[str]]:
-    path = find_shortest_path(world)
-    if path is None:
-        raise ValueError("No path exists between start and end zones!")
-
+    paths = assign_diverse_paths(world)
     drones = []
-    for i in range(1, world.nb_drones + 1):
-        drone = DroneState(i, path)
+    for drone_id in range(1, world.nb_drones + 1):
+        drone = DroneState(drone_id, paths[drone_id])
         drones.append(drone)
 
     # way to look up a connection's max link capacity just from its name string:
@@ -65,7 +62,6 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
     connection_occupancy: dict[str, int] = {}
     turns: list[list[str]] = []
     zone_reserved: dict[str, int] = {}
-
 
     turn_count = 0
     while not all_delivered(drones):
@@ -181,7 +177,8 @@ def simulate_all_drones(world: Map) -> list[list[str]]:
                     break
                 granted.append(drone)
                 free_slots -= 1
-                zone_reserved[destination_zone_name] = zone_reserved.get(destination_zone_name, 0) + 1 
+                zone_reserved[destination_zone_name] = zone_reserved.get(
+                    destination_zone_name, 0) + 1
 
         # commit: granted drones actually move, everyone else waits
         for drone in wanting_to_move:

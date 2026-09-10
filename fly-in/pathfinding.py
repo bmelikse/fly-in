@@ -12,11 +12,12 @@ def neighbors_of(world: Map, zone_name: str) -> list[str]:
             result.append(connection.zone_a)
     return result
 
+
 def find_shortest_path(world: Map,
                        usage: dict[str, int] | None = None,
-                       penalty: int = 1
-) -> list[str] | None:
-    distances: dict[str, int]= {world.start.name: 0}
+                       penalty: float = 0.1  # 0.03 gives 44 moves
+                       ) -> list[str] | None:
+    distances: dict[str, int] = {world.start.name: 0}
     previous: dict[str, str] = {}
     queue: list[tuple[int, str]] = [(0, world.start.name)]
 
@@ -52,10 +53,27 @@ def find_shortest_path(world: Map,
     path.reverse()
     return path
 
-def move_cost(zone: Zone)-> int:
+
+def move_cost(zone: Zone) -> int:
     if zone.zone_type == "blocked":
         return -1
     if zone.zone_type == "restricted":
         return 2
     return 1
 
+
+def assign_diverse_paths(world: Map) -> dict[int, list[str]]:
+    '''loop through all drones sequentially to build customized routes.'''
+    usage: dict[str, int] = {}
+    paths: dict[int, list[str]] = {}
+
+    for drone_id in range(1, world.nb_drones + 1):
+        path = find_shortest_path(world, usage)
+        if path is None:
+            raise ValueError(f"No path exists for drone {drone_id}")
+        paths[drone_id] = path
+
+        for zone_name in path:
+            usage[zone_name] = usage.get(zone_name, 0) + 1
+
+    return paths
