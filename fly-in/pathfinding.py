@@ -15,7 +15,7 @@ def neighbors_of(world: Map, zone_name: str) -> list[str]:
 
 def find_shortest_path(world: Map,
                        usage: dict[str, int] | None = None,
-                       penalty: float = 0.1  # 0.03 gives 44 moves
+                       penalty: float = 0.09  # 0.03 gives 44 moves
                        ) -> list[str] | None:
     distances: dict[str, int] = {world.start.name: 0}
     previous: dict[str, str] = {}
