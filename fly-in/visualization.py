@@ -114,4 +114,7 @@ def animate_simulation(world: Map, history: list[dict[int, tuple[float, float]]]
 
     drone_artists: dict[int, AnnotationBbox] = {}
     drone_labels: dict[int, plt.text] = {}
+
+    # to be continued
+
     
