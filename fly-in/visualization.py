@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import RegularPolygon
 from parser import Map, parse
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.animation import FuncAnimation
+
 
 DRONE_ICON_PATH = "assets/drone3.png"
 drone_icon = plt.imread(DRONE_ICON_PATH)
@@ -60,10 +62,7 @@ def resolve_zone_color(raw_color: str | None) -> str:
     return "lightgray"  # anything else
 
 
-def draw_static_map(world: Map) -> None:
-    # v window and inside plotting area
-    figure, axes = plt.subplots(figsize=(20, 20))
-
+def draw_static_layout(axes, world: Map) -> None:
     for conn in world.connections:
         zone_a = world.zones[conn.zone_a]
         zone_b = world.zones[conn.zone_b]
@@ -97,13 +96,22 @@ def draw_static_map(world: Map) -> None:
                   fontsize=11, zorder=4)
     
 
-    axes.set_aspect("equal")
-    axes.axis("on")
-    # draw_drone(axes, zone.x, zone.y, 1)
-    # build_position_history(world, turns) - continue from here
-    plt.show()
+        axes.set_aspect("equal")
+        axes.axis("off")
+
+world = parse()
+# v window and inside plotting area
+figure, axes = plt.subplots(figsize=(20, 20))
+
+draw_static_layout(axes, world)
+plt.show()
 
 
+def animate_simulation(world: Map, history: list[dict[int, tuple[float, float]]],
+                       interval_ms: int = 500):
+    fig, ax = plt.subplots(figsize=(20, 20))
+    draw_static_layout(ax, world)
 
-draw_static_map(parse())
-
+    drone_artists: dict[int, AnnotationBbox] = {}
+    drone_labels: dict[int, plt.text] = {}
+    
