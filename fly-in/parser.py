@@ -69,12 +69,13 @@ class Connection:
                    )
 
 
-def parse() -> Map:
+def parse(path: str | None = None) -> Map:
     '''split each line's prefix, give the rest to the right from_line,
     and assemble everything into one Map'''
+    file_path = path if path is not None else argv[1]
     world = Map()
     try:
-        with open(argv[1], "r") as file:
+        with open(file_path, "r") as file:
             for line in file:
                 line = line.strip()
                 if not line or line.startswith("#"):

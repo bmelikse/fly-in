@@ -1,0 +1,730 @@
+# CHALLENGER LEVEL: THE IMPOSSIBLE DREAM — HORIZONTAL NIGHTMARE
+# WARNING: This map is intentionally enormous and brutally complicated.
+# It contains bottlenecks, loops, decoys, capacity conflicts, restricted
+# corridors, priority zones, emergency bypasses, and multiple convergences.
+# Despite the complexity, at least one valid route exists from start to goal.
+
+nb_drones: 25
+
+# =====================================================================
+# LAYER 0: THE FIVE GATES OF REGRET
+# =====================================================================
+
+start_hub: start 0 0 [color=green]
+
+hub: gate_01 2 0 [color=red max_drones=1]
+hub: gate_02 3 0 [color=red max_drones=1]
+hub: gate_03 4 0 [color=red max_drones=1]
+hub: gate_04 5 0 [color=red max_drones=1]
+hub: gate_05 6 0 [color=red max_drones=1]
+hub: gate_06 7 0 [color=orange max_drones=2]
+
+# =====================================================================
+# LAYER 1: THE DESPAIR MAZE
+# =====================================================================
+
+hub: maze_a1 3 2 [color=purple]
+hub: maze_a2 4 2 [color=purple]
+hub: maze_a3 5 2 [color=purple]
+hub: maze_a4 6 2 [color=purple]
+hub: maze_a5 7 2 [color=purple]
+hub: maze_a_dead 8 2 [color=black]
+
+hub: maze_b1 3 -2 [color=purple]
+hub: maze_b2 4 -2 [color=purple]
+hub: maze_b3 5 -2 [color=purple]
+hub: maze_b4 6 -2 [color=purple]
+hub: maze_b5 7 -2 [color=purple]
+hub: maze_b_dead 8 -2 [color=black]
+
+hub: maze_c1 4 1 [zone=restricted color=brown]
+hub: maze_c2 5 1 [zone=restricted color=brown]
+hub: maze_c3 6 1 [zone=restricted color=brown]
+hub: maze_c4 7 1 [zone=restricted color=brown]
+hub: maze_c5 8 1 [zone=restricted color=brown]
+hub: maze_c6 8 0 [zone=restricted color=brown]
+
+hub: maze_d1 4 -1 [zone=restricted color=brown]
+hub: maze_d2 5 -1 [zone=restricted color=brown]
+hub: maze_d3 6 -1 [zone=restricted color=brown]
+hub: maze_d4 7 -1 [zone=restricted color=brown]
+hub: maze_d5 8 -1 [zone=restricted color=brown]
+
+# =====================================================================
+# LAYER 2: THE MICRO-GATE COMPLEX
+# =====================================================================
+
+hub: micro_01 9 0 [color=orange max_drones=1]
+hub: micro_02 10 0 [color=orange max_drones=1]
+hub: micro_03 11 0 [color=orange max_drones=1]
+hub: micro_04 12 0 [color=orange max_drones=2]
+hub: micro_05 13 0 [color=orange max_drones=1]
+
+# Upper capacity traps
+hub: overflow_a1 9 2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_a2 10 2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_a3 11 2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_a4 12 2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_a5 13 2 [zone=restricted color=maroon max_drones=2]
+
+# Lower capacity traps
+hub: overflow_b1 9 -2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_b2 10 -2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_b3 11 -2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_b4 12 -2 [zone=restricted color=maroon max_drones=2]
+hub: overflow_b5 13 -2 [zone=restricted color=maroon max_drones=2]
+
+# =====================================================================
+# LAYER 3: THE FALSE HOPE HIGHWAY
+# =====================================================================
+
+hub: hope_01 14 0 [zone=priority color=gold max_drones=3]
+hub: hope_02 15 0 [zone=priority color=gold max_drones=2]
+hub: hope_03 16 0 [zone=priority color=gold max_drones=2]
+hub: hope_04 17 0 [zone=priority color=gold max_drones=1]
+hub: hope_05 18 0 [zone=priority color=gold max_drones=2]
+
+# Upper priority decoy
+hub: priority_u1 14 2 [zone=priority color=gold]
+hub: priority_u2 15 2 [zone=priority color=gold]
+hub: priority_u3 16 2 [zone=priority color=gold]
+hub: priority_u4 17 2 [zone=priority color=gold]
+hub: priority_u_dead 18 2 [color=black]
+
+# Lower priority decoy
+hub: priority_d1 14 -2 [zone=priority color=gold]
+hub: priority_d2 15 -2 [zone=priority color=gold]
+hub: priority_d3 16 -2 [zone=priority color=gold]
+hub: priority_d4 17 -2 [zone=priority color=gold]
+hub: priority_d_dead 18 -2 [color=black]
+
+# =====================================================================
+# LAYER 4: THE SEVEN-WAY CONVERGENCE
+# =====================================================================
+
+hub: conv_top1 19 3 [zone=restricted color=darkred max_drones=1]
+hub: conv_top2 20 3 [zone=restricted color=darkred max_drones=1]
+hub: conv_top3 21 3 [zone=restricted color=darkred max_drones=1]
+hub: conv_top4 22 3 [zone=restricted color=darkred max_drones=1]
+
+hub: conv_mid1 19 1 [zone=restricted color=darkred max_drones=1]
+hub: conv_mid2 20 1 [zone=restricted color=darkred max_drones=1]
+hub: conv_mid3 21 1 [zone=restricted color=darkred max_drones=1]
+hub: conv_mid4 22 1 [zone=restricted color=darkred max_drones=1]
+
+hub: conv_low1 19 -1 [zone=restricted color=darkred max_drones=1]
+hub: conv_low2 20 -1 [zone=restricted color=darkred max_drones=1]
+hub: conv_low3 21 -1 [zone=restricted color=darkred max_drones=1]
+hub: conv_low4 22 -1 [zone=restricted color=darkred max_drones=1]
+
+hub: conv_bottom1 19 -3 [zone=restricted color=darkred max_drones=1]
+hub: conv_bottom2 20 -3 [zone=restricted color=darkred max_drones=1]
+hub: conv_bottom3 21 -3 [zone=restricted color=darkred max_drones=1]
+hub: conv_bottom4 22 -3 [zone=restricted color=darkred max_drones=1]
+
+# Crossroads
+hub: convergence_core 23 0 [color=violet max_drones=4]
+
+# =====================================================================
+# LAYER 5: THE FOUR-WAY LOOP OF DOOM
+# =====================================================================
+
+hub: loop_alpha 24 2 [color=purple max_drones=2]
+hub: loop_beta 26 2 [color=purple max_drones=2]
+hub: loop_gamma 26 -2 [color=purple max_drones=2]
+hub: loop_delta 24 -2 [color=purple max_drones=2]
+
+hub: loop_center 25 0 [zone=restricted color=indigo max_drones=1]
+
+# =====================================================================
+# LAYER 6: THE CAPACITY LABYRINTH
+# =====================================================================
+
+hub: cap_01 27 0 [color=orange max_drones=1]
+hub: cap_02 28 0 [color=orange max_drones=1]
+hub: cap_03 29 0 [color=orange max_drones=2]
+hub: cap_04 30 0 [color=orange max_drones=1]
+hub: cap_05 31 0 [color=orange max_drones=1]
+
+hub: cap_upper1 27 2 [zone=restricted color=maroon max_drones=2]
+hub: cap_upper2 28 2 [zone=restricted color=maroon max_drones=2]
+hub: cap_upper3 29 2 [zone=restricted color=maroon max_drones=2]
+hub: cap_upper4 30 2 [zone=restricted color=maroon max_drones=2]
+hub: cap_upper5 31 2 [zone=restricted color=maroon max_drones=2]
+
+hub: cap_lower1 27 -2 [zone=restricted color=maroon max_drones=2]
+hub: cap_lower2 28 -2 [zone=restricted color=maroon max_drones=2]
+hub: cap_lower3 29 -2 [zone=restricted color=maroon max_drones=2]
+hub: cap_lower4 30 -2 [zone=restricted color=maroon max_drones=2]
+hub: cap_lower5 31 -2 [zone=restricted color=maroon max_drones=2]
+
+# =====================================================================
+# LAYER 7: THE DECOY GARDENS
+# =====================================================================
+
+hub: garden_a1 32 3 [color=teal]
+hub: garden_a2 33 3 [color=teal]
+hub: garden_a3 34 3 [color=teal]
+hub: garden_a4 35 3 [color=teal]
+hub: garden_a_dead 36 3 [color=black]
+
+hub: garden_b1 32 -3 [color=teal]
+hub: garden_b2 33 -3 [color=teal]
+hub: garden_b3 34 -3 [color=teal]
+hub: garden_b4 35 -3 [color=teal]
+hub: garden_b_dead 36 -3 [color=black]
+
+hub: garden_mid1 32 1 [zone=priority color=gold max_drones=2]
+hub: garden_mid2 33 1 [zone=priority color=gold max_drones=2]
+hub: garden_mid3 34 1 [zone=priority color=gold max_drones=1]
+hub: garden_mid4 35 1 [zone=priority color=gold max_drones=1]
+
+hub: garden_mid5 32 -1 [zone=priority color=gold max_drones=2]
+hub: garden_mid6 33 -1 [zone=priority color=gold max_drones=2]
+hub: garden_mid7 34 -1 [zone=priority color=gold max_drones=1]
+hub: garden_mid8 35 -1 [zone=priority color=gold max_drones=1]
+
+# =====================================================================
+# LAYER 8: THE FRACTURED HIGHWAY
+# =====================================================================
+
+hub: fracture_01 37 0 [color=crimson max_drones=3]
+hub: fracture_02 38 0 [color=crimson max_drones=2]
+hub: fracture_03 39 0 [color=crimson max_drones=1]
+hub: fracture_04 40 0 [color=crimson max_drones=1]
+hub: fracture_05 41 0 [color=crimson max_drones=2]
+hub: fracture_06 42 0 [color=crimson max_drones=1]
+
+# Upper fracture route
+hub: fracture_u1 37 2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_u2 38 2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_u3 39 2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_u4 40 2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_u5 41 2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_u6 42 2 [zone=restricted color=darkred max_drones=1]
+
+# Lower fracture route
+hub: fracture_d1 37 -2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_d2 38 -2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_d3 39 -2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_d4 40 -2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_d5 41 -2 [zone=restricted color=darkred max_drones=1]
+hub: fracture_d6 42 -2 [zone=restricted color=darkred max_drones=1]
+
+# =====================================================================
+# LAYER 9: THE SPIDER WEB
+# =====================================================================
+
+hub: spider_01 43 3 [color=purple]
+hub: spider_02 44 3 [color=purple]
+hub: spider_03 45 3 [color=purple]
+hub: spider_04 46 3 [color=purple]
+
+hub: spider_05 43 1 [color=purple]
+hub: spider_06 44 1 [zone=restricted color=brown]
+hub: spider_07 45 1 [zone=restricted color=brown]
+hub: spider_08 46 1 [color=purple]
+
+hub: spider_09 43 -1 [color=purple]
+hub: spider_10 44 -1 [zone=restricted color=brown]
+hub: spider_11 45 -1 [zone=restricted color=brown]
+hub: spider_12 46 -1 [color=purple]
+
+hub: spider_13 43 -3 [color=purple]
+hub: spider_14 44 -3 [color=purple]
+hub: spider_15 45 -3 [color=purple]
+hub: spider_16 46 -3 [color=purple]
+
+# =====================================================================
+# LAYER 10: THE PENULTIMATE GAUNTLET
+# =====================================================================
+
+hub: gauntlet_01 47 0 [color=crimson max_drones=2]
+hub: gauntlet_02 48 0 [color=crimson max_drones=1]
+hub: gauntlet_03 49 0 [color=crimson max_drones=1]
+hub: gauntlet_04 50 0 [color=crimson max_drones=1]
+hub: gauntlet_05 51 0 [color=crimson max_drones=1]
+hub: gauntlet_06 52 0 [color=crimson max_drones=1]
+hub: gauntlet_07 53 0 [color=crimson max_drones=1]
+
+# Side torture corridors
+hub: torture_u1 47 2 [zone=restricted color=darkred max_drones=1]
+hub: torture_u2 48 2 [zone=restricted color=darkred max_drones=1]
+hub: torture_u3 49 2 [zone=restricted color=darkred max_drones=1]
+hub: torture_u4 50 2 [zone=restricted color=darkred max_drones=1]
+hub: torture_u5 51 2 [zone=restricted color=darkred max_drones=1]
+hub: torture_u6 52 2 [zone=restricted color=darkred max_drones=1]
+
+hub: torture_d1 47 -2 [zone=restricted color=darkred max_drones=1]
+hub: torture_d2 48 -2 [zone=restricted color=darkred max_drones=1]
+hub: torture_d3 49 -2 [zone=restricted color=darkred max_drones=1]
+hub: torture_d4 50 -2 [zone=restricted color=darkred max_drones=1]
+hub: torture_d5 51 -2 [zone=restricted color=darkred max_drones=1]
+hub: torture_d6 52 -2 [zone=restricted color=darkred max_drones=1]
+
+# =====================================================================
+# LAYER 11: THE FINAL IMPOSSIBLE CORRIDOR
+# =====================================================================
+
+hub: final_01 54 0 [color=violet max_drones=3]
+hub: final_02 55 0 [color=crimson max_drones=2]
+hub: final_03 56 0 [color=crimson max_drones=1]
+hub: final_04 57 0 [color=crimson max_drones=1]
+hub: final_05 58 0 [color=crimson max_drones=1]
+hub: final_06 59 0 [color=crimson max_drones=1]
+hub: final_07 60 0 [color=crimson max_drones=1]
+hub: final_08 61 0 [color=crimson max_drones=1]
+hub: final_09 62 0 [color=crimson max_drones=1]
+
+# The ultimate goal
+end_hub: impossible_goal 64 0 [color=green]
+
+# =====================================================================
+# CONNECTIONS: THE WEB OF SUFFERING
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# Layer 0 — Gate corridor
+# ---------------------------------------------------------------------
+
+connection: start-gate_01 [max_link_capacity=1]
+connection: gate_01-gate_02 [max_link_capacity=1]
+connection: gate_02-gate_03 [max_link_capacity=1]
+connection: gate_03-gate_04 [max_link_capacity=1]
+connection: gate_04-gate_05 [max_link_capacity=1]
+connection: gate_05-gate_06 [max_link_capacity=2]
+
+# ---------------------------------------------------------------------
+# Layer 1 — Despair maze
+# ---------------------------------------------------------------------
+
+connection: gate_01-maze_a1
+connection: gate_02-maze_b1
+connection: gate_03-maze_c1
+connection: gate_04-maze_d1
+
+connection: maze_a1-maze_a2
+connection: maze_a2-maze_a3
+connection: maze_a3-maze_a4
+connection: maze_a4-maze_a5
+connection: maze_a5-maze_a_dead
+
+connection: maze_b1-maze_b2
+connection: maze_b2-maze_b3
+connection: maze_b3-maze_b4
+connection: maze_b4-maze_b5
+connection: maze_b5-maze_b_dead
+
+connection: maze_c1-maze_c2
+connection: maze_c2-maze_c3
+connection: maze_c3-maze_c4
+connection: maze_c4-maze_c5
+connection: maze_c5-maze_c6
+connection: maze_c6-maze_c1
+
+connection: maze_d1-maze_d2
+connection: maze_d2-maze_d3
+connection: maze_d3-maze_d4
+connection: maze_d4-maze_d5
+
+connection: maze_a2-maze_c2
+connection: maze_a4-maze_c4
+connection: maze_b2-maze_d2
+connection: maze_b4-maze_d4
+
+connection: maze_c3-maze_d3
+connection: maze_c5-micro_01
+connection: maze_d5-micro_01
+
+# ---------------------------------------------------------------------
+# Layer 2 — Micro-gates
+# ---------------------------------------------------------------------
+
+connection: gate_06-micro_01 [max_link_capacity=2]
+connection: micro_01-micro_02 [max_link_capacity=1]
+connection: micro_02-micro_03 [max_link_capacity=1]
+connection: micro_03-micro_04 [max_link_capacity=2]
+connection: micro_04-micro_05 [max_link_capacity=1]
+
+connection: micro_01-overflow_a1
+connection: micro_02-overflow_a2
+connection: micro_03-overflow_a3
+connection: micro_04-overflow_a4
+connection: micro_05-overflow_a5
+
+connection: micro_01-overflow_b1
+connection: micro_02-overflow_b2
+connection: micro_03-overflow_b3
+connection: micro_04-overflow_b4
+connection: micro_05-overflow_b5
+
+connection: overflow_a1-overflow_a2
+connection: overflow_a2-overflow_a3
+connection: overflow_a3-overflow_a4
+connection: overflow_a4-overflow_a5
+
+connection: overflow_b1-overflow_b2
+connection: overflow_b2-overflow_b3
+connection: overflow_b3-overflow_b4
+connection: overflow_b4-overflow_b5
+
+connection: overflow_a3-overflow_b3
+connection: overflow_a5-overflow_b5
+
+connection: overflow_a5-hope_01
+connection: overflow_b5-hope_01
+connection: micro_05-hope_01
+
+# ---------------------------------------------------------------------
+# Layer 3 — False Hope Highway
+# ---------------------------------------------------------------------
+
+connection: hope_01-hope_02
+connection: hope_02-hope_03
+connection: hope_03-hope_04
+connection: hope_04-hope_05
+
+connection: hope_01-priority_u1
+connection: priority_u1-priority_u2
+connection: priority_u2-priority_u3
+connection: priority_u3-priority_u4
+connection: priority_u4-priority_u_dead
+
+connection: hope_02-priority_u2
+connection: hope_03-priority_u3
+
+connection: hope_01-priority_d1
+connection: priority_d1-priority_d2
+connection: priority_d2-priority_d3
+connection: priority_d3-priority_d4
+connection: priority_d4-priority_d_dead
+
+connection: hope_02-priority_d2
+connection: hope_03-priority_d3
+
+connection: priority_u2-priority_d2
+connection: priority_u4-hope_05
+connection: priority_d4-hope_05
+
+# ---------------------------------------------------------------------
+# Layer 4 — Seven-way convergence
+# ---------------------------------------------------------------------
+
+connection: hope_05-conv_top1
+connection: hope_05-conv_mid1
+connection: hope_05-conv_low1
+connection: hope_05-conv_bottom1
+
+connection: conv_top1-conv_top2
+connection: conv_top2-conv_top3
+connection: conv_top3-conv_top4
+
+connection: conv_mid1-conv_mid2
+connection: conv_mid2-conv_mid3
+connection: conv_mid3-conv_mid4
+
+connection: conv_low1-conv_low2
+connection: conv_low2-conv_low3
+connection: conv_low3-conv_low4
+
+connection: conv_bottom1-conv_bottom2
+connection: conv_bottom2-conv_bottom3
+connection: conv_bottom3-conv_bottom4
+
+connection: conv_top2-conv_mid2
+connection: conv_top3-conv_mid3
+connection: conv_mid2-conv_low2
+connection: conv_mid3-conv_low3
+connection: conv_low2-conv_bottom2
+connection: conv_low3-conv_bottom3
+
+connection: conv_top4-convergence_core
+connection: conv_mid4-convergence_core
+connection: conv_low4-convergence_core
+connection: conv_bottom4-convergence_core
+
+# ---------------------------------------------------------------------
+# Layer 5 — Four-way loop of doom
+# ---------------------------------------------------------------------
+
+connection: convergence_core-loop_alpha
+connection: loop_alpha-loop_beta
+connection: loop_beta-loop_gamma
+connection: loop_gamma-loop_delta
+connection: loop_delta-loop_alpha
+
+connection: loop_alpha-loop_center
+connection: loop_beta-loop_center
+connection: loop_gamma-loop_center
+connection: loop_delta-loop_center
+
+connection: loop_center-cap_01
+connection: convergence_core-cap_01
+
+# ---------------------------------------------------------------------
+# Layer 6 — Capacity labyrinth
+# ---------------------------------------------------------------------
+
+connection: cap_01-cap_02 [max_link_capacity=1]
+connection: cap_02-cap_03 [max_link_capacity=1]
+connection: cap_03-cap_04 [max_link_capacity=1]
+connection: cap_04-cap_05 [max_link_capacity=1]
+
+connection: cap_01-cap_upper1
+connection: cap_02-cap_upper2
+connection: cap_03-cap_upper3
+connection: cap_04-cap_upper4
+connection: cap_05-cap_upper5
+
+connection: cap_01-cap_lower1
+connection: cap_02-cap_lower2
+connection: cap_03-cap_lower3
+connection: cap_04-cap_lower4
+connection: cap_05-cap_lower5
+
+connection: cap_upper1-cap_upper2
+connection: cap_upper2-cap_upper3
+connection: cap_upper3-cap_upper4
+connection: cap_upper4-cap_upper5
+
+connection: cap_lower1-cap_lower2
+connection: cap_lower2-cap_lower3
+connection: cap_lower3-cap_lower4
+connection: cap_lower4-cap_lower5
+
+connection: cap_upper2-cap_lower2
+connection: cap_upper3-cap_lower3
+connection: cap_upper4-cap_lower4
+
+connection: cap_upper5-garden_mid1
+connection: cap_lower5-garden_mid5
+connection: cap_05-garden_mid1
+
+# ---------------------------------------------------------------------
+# Layer 7 — Decoy gardens
+# ---------------------------------------------------------------------
+
+connection: garden_mid1-garden_mid2
+connection: garden_mid2-garden_mid3
+connection: garden_mid3-garden_mid4
+
+connection: garden_mid5-garden_mid6
+connection: garden_mid6-garden_mid7
+connection: garden_mid7-garden_mid8
+
+connection: garden_mid1-garden_a1
+connection: garden_a1-garden_a2
+connection: garden_a2-garden_a3
+connection: garden_a3-garden_a4
+connection: garden_a4-garden_a_dead
+
+connection: garden_mid5-garden_b1
+connection: garden_b1-garden_b2
+connection: garden_b2-garden_b3
+connection: garden_b3-garden_b4
+connection: garden_b4-garden_b_dead
+
+connection: garden_mid2-garden_mid6
+connection: garden_mid3-garden_mid7
+connection: garden_mid4-fracture_01
+connection: garden_mid8-fracture_01
+
+connection: garden_a3-garden_mid3
+connection: garden_b3-garden_mid7
+
+# ---------------------------------------------------------------------
+# Layer 8 — Fractured highway
+# ---------------------------------------------------------------------
+
+connection: fracture_01-fracture_02 [max_link_capacity=2]
+connection: fracture_02-fracture_03 [max_link_capacity=1]
+connection: fracture_03-fracture_04 [max_link_capacity=1]
+connection: fracture_04-fracture_05 [max_link_capacity=2]
+connection: fracture_05-fracture_06 [max_link_capacity=1]
+
+connection: fracture_01-fracture_u1
+connection: fracture_u1-fracture_u2
+connection: fracture_u2-fracture_u3
+connection: fracture_u3-fracture_u4
+connection: fracture_u4-fracture_u5
+connection: fracture_u5-fracture_u6
+
+connection: fracture_01-fracture_d1
+connection: fracture_d1-fracture_d2
+connection: fracture_d2-fracture_d3
+connection: fracture_d3-fracture_d4
+connection: fracture_d4-fracture_d5
+connection: fracture_d5-fracture_d6
+
+connection: fracture_u2-fracture_d2
+connection: fracture_u4-fracture_d4
+connection: fracture_u6-fracture_06
+
+connection: fracture_d3-fracture_03
+connection: fracture_d5-fracture_05
+
+connection: fracture_06-spider_05
+connection: fracture_u6-spider_01
+connection: fracture_d6-spider_13
+
+# ---------------------------------------------------------------------
+# Layer 9 — Spider web
+# ---------------------------------------------------------------------
+
+connection: spider_01-spider_02
+connection: spider_02-spider_03
+connection: spider_03-spider_04
+
+connection: spider_05-spider_06
+connection: spider_06-spider_07
+connection: spider_07-spider_08
+
+connection: spider_09-spider_10
+connection: spider_10-spider_11
+connection: spider_11-spider_12
+
+connection: spider_13-spider_14
+connection: spider_14-spider_15
+connection: spider_15-spider_16
+
+connection: spider_01-spider_05
+connection: spider_05-spider_09
+connection: spider_09-spider_13
+
+connection: spider_02-spider_06
+connection: spider_06-spider_10
+connection: spider_10-spider_14
+
+connection: spider_03-spider_07
+connection: spider_07-spider_11
+connection: spider_11-spider_15
+
+connection: spider_04-spider_08
+connection: spider_08-spider_12
+connection: spider_12-spider_16
+
+connection: spider_06-spider_11
+connection: spider_10-spider_15
+
+connection: spider_08-gauntlet_01
+connection: spider_12-gauntlet_01
+connection: spider_16-gauntlet_01
+
+# ---------------------------------------------------------------------
+# Layer 10 — Penultimate gauntlet
+# ---------------------------------------------------------------------
+
+connection: gauntlet_01-gauntlet_02 [max_link_capacity=1]
+connection: gauntlet_02-gauntlet_03 [max_link_capacity=1]
+connection: gauntlet_03-gauntlet_04 [max_link_capacity=1]
+connection: gauntlet_04-gauntlet_05 [max_link_capacity=1]
+connection: gauntlet_05-gauntlet_06 [max_link_capacity=1]
+connection: gauntlet_06-gauntlet_07 [max_link_capacity=1]
+
+connection: gauntlet_01-torture_u1
+connection: torture_u1-torture_u2
+connection: torture_u2-torture_u3
+connection: torture_u3-torture_u4
+connection: torture_u4-torture_u5
+connection: torture_u5-torture_u6
+
+connection: gauntlet_01-torture_d1
+connection: torture_d1-torture_d2
+connection: torture_d2-torture_d3
+connection: torture_d3-torture_d4
+connection: torture_d4-torture_d5
+connection: torture_d5-torture_d6
+
+connection: torture_u2-torture_d2
+connection: torture_u4-torture_d4
+connection: torture_u6-gauntlet_07
+
+connection: torture_d3-gauntlet_03
+connection: torture_d5-gauntlet_05
+
+connection: gauntlet_03-gauntlet_07
+connection: gauntlet_05-gauntlet_07
+
+# ---------------------------------------------------------------------
+# Layer 11 — Final corridor
+# ---------------------------------------------------------------------
+
+connection: gauntlet_07-final_01
+connection: final_01-final_02 [max_link_capacity=2]
+connection: final_02-final_03 [max_link_capacity=1]
+connection: final_03-final_04 [max_link_capacity=1]
+connection: final_04-final_05 [max_link_capacity=1]
+connection: final_05-final_06 [max_link_capacity=1]
+connection: final_06-final_07 [max_link_capacity=1]
+connection: final_07-final_08 [max_link_capacity=1]
+connection: final_08-final_09 [max_link_capacity=1]
+
+# Last-minute bypasses
+connection: final_02-final_05
+connection: final_04-final_07
+connection: final_06-final_09
+
+# THE ONLY THING THAT MATTERS
+connection: final_09-impossible_goal
+
+# =====================================================================
+# EMERGENCY BYPASS NETWORK
+# =====================================================================
+
+# Long-range emergency shortcuts create additional routing possibilities
+# but force algorithms to consider radically different paths.
+
+connection: maze_a4-overflow_a1
+connection: maze_d4-overflow_b1
+
+connection: overflow_a2-priority_u1
+connection: overflow_b2-priority_d1
+
+connection: hope_02-conv_top1
+connection: hope_03-conv_bottom1
+
+connection: priority_u3-conv_mid1
+connection: priority_d3-conv_low1
+
+connection: conv_mid2-loop_alpha
+connection: conv_low2-loop_delta
+
+connection: convergence_core-cap_upper1
+connection: loop_center-cap_lower1
+
+connection: cap_upper3-garden_mid3
+connection: cap_lower3-garden_mid7
+
+connection: garden_mid2-fracture_u2
+connection: garden_mid6-fracture_d2
+
+connection: fracture_02-spider_01
+connection: fracture_04-spider_09
+connection: fracture_05-spider_13
+
+connection: spider_03-gauntlet_01
+connection: spider_11-gauntlet_01
+connection: spider_15-gauntlet_01
+
+connection: gauntlet_02-torture_u3
+connection: gauntlet_04-torture_d3
+connection: gauntlet_06-torture_u5
+
+# =====================================================================
+# FINAL NIGHTMARE PROPERTIES
+# =====================================================================
+# - 25 drones
+# - 64 horizontal coordinate range
+# - 12 major zones
+# - Multiple independent routes
+# - Numerous cycles
+# - Multiple dead ends
+# - Restricted corridors
+# - Priority corridors
+# - Capacity-1 bottlenecks
+# - Cross-layer shortcuts
+# - Emergency bypasses
+# - Multiple convergence points
+# - Valid start-to-goal connectivity
+# - Intentionally hostile routing topology
+# =====================================================================
