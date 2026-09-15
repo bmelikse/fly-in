@@ -15,7 +15,7 @@ def neighbors_of(world: Map, zone_name: str) -> list[str]:
 
 def find_shortest_path(world: Map,
                        usage: dict[str, int] | None = None,
-                       penalty: float = 0.09  # 0.03 gives 44 moves
+                       penalty: float = 0.009  # 0.03 gives 44 moves
                        ) -> list[str] | None:
     distances: dict[str, int] = {world.start.name: 0}
     previous: dict[str, str] = {}
@@ -35,7 +35,9 @@ def find_shortest_path(world: Map,
                 cost += usage.get(neighbor_name, 0) * penalty
             new_cost = current_cost + cost
 
-            if neighbor_name not in distances or new_cost < distances[neighbor_name]:
+            if neighbor_name not in distances or (
+                new_cost < distances[neighbor_name]
+            ):
                 distances[neighbor_name] = new_cost
                 previous[neighbor_name] = current_zone
                 heapq.heappush(queue, (new_cost, neighbor_name))

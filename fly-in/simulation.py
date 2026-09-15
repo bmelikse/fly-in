@@ -1,5 +1,5 @@
-from parser import Map, Zone, Connection
-from pathfinding import move_cost, find_shortest_path, assign_diverse_paths
+from parser import Map
+from pathfinding import move_cost, assign_diverse_paths
 
 
 class DroneState:
@@ -9,8 +9,8 @@ class DroneState:
         self.path_index = 0  # where the drone currently is
         self.turns_waited = 0
         self.delivered = False  # has it reached the end?
-        self.in_transit = False  # is it mid-flight on a 2 turn restricted move?
-        self.transit_turns_left = 0  # if in_transit, how many turns until arrival?
+        self.in_transit = False  # is it mid-flight on a 2 turn restricted move
+        self.transit_turns_left = 0  # if in_transit, how many turns until arrival
 
 
 def simulate_single_drone(world: Map, path: list[str]) -> list[list[str]]:

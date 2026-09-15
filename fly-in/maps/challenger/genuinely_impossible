@@ -1,0 +1,720 @@
+# CHALLENGER LEVEL: THE INFINITE MAZE
+# WARNING: EXTREME STRESS TEST
+# 100 drones, multiple competing routes, bottlenecks, loops,
+# restricted zones, priority zones, capacity constraints,
+# alternate routes and several convergence points.
+#
+# The map is intentionally difficult and is designed to stress:
+# - path finding
+# - collision avoidance
+# - zone capacity handling
+# - link capacity handling
+# - deadlock prevention
+# - route selection
+# - multi-drone coordination
+#
+# EVERY ZONE USES RAINBOW COLOR.
+
+nb_drones: 100
+
+# ============================================================
+# LAYER 0: THE ORIGIN
+# ============================================================
+
+start_hub: start 0 0 [color=rainbow]
+
+hub: gate_north1 2 2 [color=rainbow max_drones=4]
+hub: gate_north2 4 4 [color=rainbow max_drones=3]
+hub: gate_north3 6 6 [color=rainbow max_drones=2]
+
+hub: gate_center1 2 0 [color=rainbow max_drones=3]
+hub: gate_center2 4 0 [color=rainbow max_drones=2]
+hub: gate_center3 6 0 [color=rainbow max_drones=2]
+
+hub: gate_south1 2 -2 [color=rainbow max_drones=4]
+hub: gate_south2 4 -4 [color=rainbow max_drones=3]
+hub: gate_south3 6 -6 [color=rainbow max_drones=2]
+
+# ============================================================
+# LAYER 1: THREE MAJOR ROUTES
+# ============================================================
+
+# -------------------- NORTH --------------------
+
+hub: north_a1 8 7 [color=rainbow]
+hub: north_a2 10 8 [color=rainbow]
+hub: north_a3 12 7 [color=rainbow]
+hub: north_b1 8 5 [color=rainbow]
+hub: north_b2 10 5 [color=rainbow]
+hub: north_b3 12 5 [color=rainbow]
+
+hub: north_loop1 9 10 [color=rainbow]
+hub: north_loop2 11 11 [color=rainbow]
+hub: north_loop3 13 10 [color=rainbow]
+hub: north_loop4 14 8 [color=rainbow]
+hub: north_loop5 13 6 [color=rainbow]
+hub: north_loop6 11 6 [color=rainbow]
+
+# -------------------- CENTER --------------------
+
+hub: center_a1 8 1 [color=rainbow]
+hub: center_a2 10 2 [color=rainbow]
+hub: center_a3 12 1 [color=rainbow]
+
+hub: center_b1 8 -1 [color=rainbow]
+hub: center_b2 10 -2 [color=rainbow]
+hub: center_b3 12 -1 [color=rainbow]
+
+hub: center_loop1 9 4 [color=rainbow]
+hub: center_loop2 11 5 [color=rainbow]
+hub: center_loop3 13 4 [color=rainbow]
+hub: center_loop4 14 2 [color=rainbow]
+hub: center_loop5 13 0 [color=rainbow]
+hub: center_loop6 11 0 [color=rainbow]
+
+# -------------------- SOUTH --------------------
+
+hub: south_a1 8 -7 [color=rainbow]
+hub: south_a2 10 -8 [color=rainbow]
+hub: south_a3 12 -7 [color=rainbow]
+hub: south_b1 8 -5 [color=rainbow]
+hub: south_b2 10 -5 [color=rainbow]
+hub: south_b3 12 -5 [color=rainbow]
+
+hub: south_loop1 9 -10 [color=rainbow]
+hub: south_loop2 11 -11 [color=rainbow]
+hub: south_loop3 13 -10 [color=rainbow]
+hub: south_loop4 14 -8 [color=rainbow]
+hub: south_loop5 13 -6 [color=rainbow]
+hub: south_loop6 11 -6 [color=rainbow]
+
+# ============================================================
+# LAYER 2: THE CROSSROADS
+# ============================================================
+
+hub: cross_north 16 7 [color=rainbow max_drones=4]
+hub: cross_upper 16 4 [color=rainbow max_drones=3]
+hub: cross_center 16 0 [color=rainbow max_drones=3]
+hub: cross_lower 16 -4 [color=rainbow max_drones=3]
+hub: cross_south 16 -7 [color=rainbow max_drones=4]
+
+# Vertical bypasses
+hub: vertical_n1 18 8 [color=rainbow]
+hub: vertical_n2 18 6 [color=rainbow]
+hub: vertical_n3 18 4 [color=rainbow]
+
+hub: vertical_c1 18 2 [color=rainbow]
+hub: vertical_c2 18 0 [color=rainbow]
+hub: vertical_c3 18 -2 [color=rainbow]
+
+hub: vertical_s1 18 -4 [color=rainbow]
+hub: vertical_s2 18 -6 [color=rainbow]
+hub: vertical_s3 18 -8 [color=rainbow]
+
+# ============================================================
+# LAYER 3: THE FOUR-WAY MAZE
+# ============================================================
+
+hub: maze_n1 20 9 [zone=restricted color=rainbow max_drones=2]
+hub: maze_n2 22 10 [zone=restricted color=rainbow max_drones=2]
+hub: maze_n3 24 9 [zone=restricted color=rainbow max_drones=2]
+hub: maze_n4 26 10 [zone=restricted color=rainbow max_drones=2]
+
+hub: maze_u1 20 5 [zone=restricted color=rainbow max_drones=2]
+hub: maze_u2 22 6 [zone=restricted color=rainbow max_drones=2]
+hub: maze_u3 24 5 [zone=restricted color=rainbow max_drones=2]
+hub: maze_u4 26 6 [zone=restricted color=rainbow max_drones=2]
+
+hub: maze_c1 20 1 [zone=restricted color=rainbow max_drones=2]
+hub: maze_c2 22 0 [zone=restricted color=rainbow max_drones=2]
+hub: maze_c3 24 1 [zone=restricted color=rainbow max_drones=2]
+hub: maze_c4 26 0 [zone=restricted color=rainbow max_drones=2]
+
+hub: maze_d1 20 -5 [zone=restricted color=rainbow max_drones=2]
+hub: maze_d2 22 -6 [zone=restricted color=rainbow max_drones=2]
+hub: maze_d3 24 -5 [zone=restricted color=rainbow max_drones=2]
+hub: maze_d4 26 -6 [zone=restricted color=rainbow max_drones=2]
+
+hub: maze_s1 20 -9 [zone=restricted color=rainbow max_drones=2]
+hub: maze_s2 22 -10 [zone=restricted color=rainbow max_drones=2]
+hub: maze_s3 24 -9 [zone=restricted color=rainbow max_drones=2]
+hub: maze_s4 26 -10 [zone=restricted color=rainbow max_drones=2]
+
+# ============================================================
+# LAYER 4: CAPACITY HELL
+# ============================================================
+
+hub: choke_n1 28 9 [color=rainbow max_drones=1]
+hub: choke_n2 30 8 [color=rainbow max_drones=1]
+hub: choke_n3 32 9 [color=rainbow max_drones=1]
+
+hub: choke_u1 28 5 [color=rainbow max_drones=1]
+hub: choke_u2 30 4 [color=rainbow max_drones=1]
+hub: choke_u3 32 5 [color=rainbow max_drones=1]
+
+hub: choke_c1 28 1 [color=rainbow max_drones=1]
+hub: choke_c2 30 0 [color=rainbow max_drones=1]
+hub: choke_c3 32 1 [color=rainbow max_drones=1]
+
+hub: choke_d1 28 -5 [color=rainbow max_drones=1]
+hub: choke_d2 30 -4 [color=rainbow max_drones=1]
+hub: choke_d3 32 -5 [color=rainbow max_drones=1]
+
+hub: choke_s1 28 -9 [color=rainbow max_drones=1]
+hub: choke_s2 30 -8 [color=rainbow max_drones=1]
+hub: choke_s3 32 -9 [color=rainbow max_drones=1]
+
+# ============================================================
+# LAYER 5: PARALLEL ROUTE NETWORK
+# ============================================================
+
+hub: route_top1 34 10 [color=rainbow]
+hub: route_top2 37 11 [color=rainbow]
+hub: route_top3 40 10 [color=rainbow]
+hub: route_top4 43 11 [color=rainbow]
+
+hub: route_high1 34 6 [color=rainbow]
+hub: route_high2 37 7 [color=rainbow]
+hub: route_high3 40 6 [color=rainbow]
+hub: route_high4 43 7 [color=rainbow]
+
+hub: route_mid1 34 1 [color=rainbow]
+hub: route_mid2 37 0 [color=rainbow]
+hub: route_mid3 40 1 [color=rainbow]
+hub: route_mid4 43 0 [color=rainbow]
+
+hub: route_low1 34 -6 [color=rainbow]
+hub: route_low2 37 -7 [color=rainbow]
+hub: route_low3 40 -6 [color=rainbow]
+hub: route_low4 43 -7 [color=rainbow]
+
+hub: route_bottom1 34 -10 [color=rainbow]
+hub: route_bottom2 37 -11 [color=rainbow]
+hub: route_bottom3 40 -10 [color=rainbow]
+hub: route_bottom4 43 -11 [color=rainbow]
+
+# ============================================================
+# LAYER 6: THE SPIDER WEB
+# ============================================================
+
+hub: web_n1 46 9 [color=rainbow]
+hub: web_n2 48 7 [color=rainbow]
+hub: web_n3 50 9 [color=rainbow]
+hub: web_n4 52 7 [color=rainbow]
+hub: web_n5 54 9 [color=rainbow]
+
+hub: web_c1 46 3 [color=rainbow]
+hub: web_c2 48 1 [color=rainbow]
+hub: web_c3 50 3 [color=rainbow]
+hub: web_c4 52 1 [color=rainbow]
+hub: web_c5 54 3 [color=rainbow]
+
+hub: web_s1 46 -3 [color=rainbow]
+hub: web_s2 48 -1 [color=rainbow]
+hub: web_s3 50 -3 [color=rainbow]
+hub: web_s4 52 -1 [color=rainbow]
+hub: web_s5 54 -3 [color=rainbow]
+
+hub: web_bottom1 46 -9 [color=rainbow]
+hub: web_bottom2 48 -7 [color=rainbow]
+hub: web_bottom3 50 -9 [color=rainbow]
+hub: web_bottom4 52 -7 [color=rainbow]
+hub: web_bottom5 54 -9 [color=rainbow]
+
+# ============================================================
+# LAYER 7: CONVERGENCE CHAMBERS
+# ============================================================
+
+hub: converge_n1 57 8 [zone=priority color=rainbow max_drones=3]
+hub: converge_n2 60 6 [zone=priority color=rainbow max_drones=2]
+
+hub: converge_u1 57 3 [zone=priority color=rainbow max_drones=3]
+hub: converge_u2 60 2 [zone=priority color=rainbow max_drones=2]
+
+hub: converge_c1 57 0 [zone=priority color=rainbow max_drones=3]
+hub: converge_c2 60 0 [zone=priority color=rainbow max_drones=2]
+
+hub: converge_d1 57 -3 [zone=priority color=rainbow max_drones=3]
+hub: converge_d2 60 -2 [zone=priority color=rainbow max_drones=2]
+
+hub: converge_s1 57 -8 [zone=priority color=rainbow max_drones=3]
+hub: converge_s2 60 -6 [zone=priority color=rainbow max_drones=2]
+
+# ============================================================
+# LAYER 8: FINAL ROUTES
+# ============================================================
+
+hub: final_top1 63 8 [color=rainbow max_drones=3]
+hub: final_top2 66 7 [color=rainbow max_drones=2]
+hub: final_top3 69 8 [color=rainbow max_drones=2]
+
+hub: final_high1 63 3 [color=rainbow max_drones=3]
+hub: final_high2 66 2 [color=rainbow max_drones=2]
+hub: final_high3 69 3 [color=rainbow max_drones=2]
+
+hub: final_mid1 63 0 [color=rainbow max_drones=3]
+hub: final_mid2 66 0 [color=rainbow max_drones=2]
+hub: final_mid3 69 0 [color=rainbow max_drones=2]
+
+hub: final_low1 63 -3 [color=rainbow max_drones=3]
+hub: final_low2 66 -2 [color=rainbow max_drones=2]
+hub: final_low3 69 -3 [color=rainbow max_drones=2]
+
+hub: final_bottom1 63 -8 [color=rainbow max_drones=3]
+hub: final_bottom2 66 -7 [color=rainbow max_drones=2]
+hub: final_bottom3 69 -8 [color=rainbow max_drones=2]
+
+# ============================================================
+# LAYER 9: THE FINAL BOTTLENECKS
+# ============================================================
+
+hub: final_gate_n 72 7 [color=rainbow max_drones=1]
+hub: final_gate_u 72 3 [color=rainbow max_drones=1]
+hub: final_gate_c 72 0 [color=rainbow max_drones=1]
+hub: final_gate_d 72 -3 [color=rainbow max_drones=1]
+hub: final_gate_s 72 -7 [color=rainbow max_drones=1]
+
+hub: pre_goal_n 75 5 [color=rainbow max_drones=3]
+hub: pre_goal_u 75 2 [color=rainbow max_drones=3]
+hub: pre_goal_c 75 0 [color=rainbow max_drones=3]
+hub: pre_goal_d 75 -2 [color=rainbow max_drones=3]
+hub: pre_goal_s 75 -5 [color=rainbow max_drones=3]
+
+# ============================================================
+# FINAL GOAL
+# ============================================================
+
+end_hub: impossible_goal 78 0 [color=rainbow]
+
+# ============================================================
+# CONNECTIONS
+# ============================================================
+
+# -------------------- START --------------------
+
+connection: start-gate_north1 [max_link_capacity=2]
+connection: start-gate_center1 [max_link_capacity=2]
+connection: start-gate_south1 [max_link_capacity=2]
+
+connection: gate_north1-gate_north2 [max_link_capacity=1]
+connection: gate_north2-gate_north3 [max_link_capacity=1]
+
+connection: gate_center1-gate_center2 [max_link_capacity=1]
+connection: gate_center2-gate_center3 [max_link_capacity=1]
+
+connection: gate_south1-gate_south2 [max_link_capacity=1]
+connection: gate_south2-gate_south3 [max_link_capacity=1]
+
+# -------------------- NORTH ENTRY --------------------
+
+connection: gate_north3-north_a1
+connection: gate_north3-north_b1
+
+connection: north_a1-north_a2
+connection: north_a2-north_a3
+connection: north_b1-north_b2
+connection: north_b2-north_b3
+
+connection: north_a1-north_loop1
+connection: north_a2-north_loop2
+connection: north_a3-north_loop3
+
+connection: north_b1-north_loop6
+connection: north_b2-north_loop5
+connection: north_b3-north_loop4
+
+connection: north_loop1-north_loop2
+connection: north_loop2-north_loop3
+connection: north_loop3-north_loop4
+connection: north_loop4-north_loop5
+connection: north_loop5-north_loop6
+connection: north_loop6-north_loop1
+
+# -------------------- CENTER ENTRY --------------------
+
+connection: gate_center3-center_a1
+connection: gate_center3-center_b1
+
+connection: center_a1-center_a2
+connection: center_a2-center_a3
+connection: center_b1-center_b2
+connection: center_b2-center_b3
+
+connection: center_a1-center_loop1
+connection: center_a2-center_loop2
+connection: center_a3-center_loop3
+
+connection: center_b1-center_loop6
+connection: center_b2-center_loop5
+connection: center_b3-center_loop4
+
+connection: center_loop1-center_loop2
+connection: center_loop2-center_loop3
+connection: center_loop3-center_loop4
+connection: center_loop4-center_loop5
+connection: center_loop5-center_loop6
+connection: center_loop6-center_loop1
+
+# -------------------- SOUTH ENTRY --------------------
+
+connection: gate_south3-south_a1
+connection: gate_south3-south_b1
+
+connection: south_a1-south_a2
+connection: south_a2-south_a3
+connection: south_b1-south_b2
+connection: south_b2-south_b3
+
+connection: south_a1-south_loop1
+connection: south_a2-south_loop2
+connection: south_a3-south_loop3
+
+connection: south_b1-south_loop6
+connection: south_b2-south_loop5
+connection: south_b3-south_loop4
+
+connection: south_loop1-south_loop2
+connection: south_loop2-south_loop3
+connection: south_loop3-south_loop4
+connection: south_loop4-south_loop5
+connection: south_loop5-south_loop6
+connection: south_loop6-south_loop1
+
+# -------------------- CROSSROADS --------------------
+
+connection: north_a3-cross_north
+connection: north_loop4-cross_north
+connection: north_b3-cross_upper
+
+connection: center_a3-cross_upper
+connection: center_loop4-cross_upper
+connection: center_b3-cross_center
+
+connection: center_a3-cross_center
+connection: center_loop4-cross_center
+connection: center_b3-cross_lower
+
+connection: south_a3-cross_lower
+connection: south_loop4-cross_lower
+connection: south_b3-cross_south
+
+# -------------------- VERTICAL BYPASSES --------------------
+
+connection: cross_north-vertical_n1
+connection: vertical_n1-vertical_n2
+connection: vertical_n2-vertical_n3
+connection: vertical_n3-cross_upper
+
+connection: cross_upper-vertical_c1
+connection: vertical_c1-vertical_c2
+connection: vertical_c2-vertical_c3
+connection: vertical_c3-cross_lower
+
+connection: cross_lower-vertical_s1
+connection: vertical_s1-vertical_s2
+connection: vertical_s2-vertical_s3
+connection: vertical_s3-cross_south
+
+connection: vertical_n2-cross_center
+connection: vertical_c2-cross_center
+connection: vertical_s2-cross_center
+
+# -------------------- MAZE NORTH --------------------
+
+connection: cross_north-maze_n1
+connection: maze_n1-maze_n2
+connection: maze_n2-maze_n3
+connection: maze_n3-maze_n4
+
+connection: maze_n1-maze_u1
+connection: maze_n2-maze_u2
+connection: maze_n3-maze_u3
+connection: maze_n4-maze_u4
+
+connection: maze_u1-maze_u2
+connection: maze_u2-maze_u3
+connection: maze_u3-maze_u4
+
+connection: maze_u1-maze_c1
+connection: maze_u2-maze_c2
+connection: maze_u3-maze_c3
+connection: maze_u4-maze_c4
+
+# -------------------- MAZE CENTER --------------------
+
+connection: cross_center-maze_c1
+connection: maze_c1-maze_c2
+connection: maze_c2-maze_c3
+connection: maze_c3-maze_c4
+
+connection: maze_c1-maze_d1
+connection: maze_c2-maze_d2
+connection: maze_c3-maze_d3
+connection: maze_c4-maze_d4
+
+connection: maze_d1-maze_d2
+connection: maze_d2-maze_d3
+connection: maze_d3-maze_d4
+
+# -------------------- MAZE SOUTH --------------------
+
+connection: cross_south-maze_s1
+connection: maze_s1-maze_s2
+connection: maze_s2-maze_s3
+connection: maze_s3-maze_s4
+
+connection: maze_s1-maze_d1
+connection: maze_s2-maze_d2
+connection: maze_s3-maze_d3
+connection: maze_s4-maze_d4
+
+# -------------------- CAPACITY HELL --------------------
+
+connection: maze_n4-choke_n1 [max_link_capacity=1]
+connection: choke_n1-choke_n2 [max_link_capacity=1]
+connection: choke_n2-choke_n3 [max_link_capacity=1]
+
+connection: maze_u4-choke_u1 [max_link_capacity=1]
+connection: choke_u1-choke_u2 [max_link_capacity=1]
+connection: choke_u2-choke_u3 [max_link_capacity=1]
+
+connection: maze_c4-choke_c1 [max_link_capacity=1]
+connection: choke_c1-choke_c2 [max_link_capacity=1]
+connection: choke_c2-choke_c3 [max_link_capacity=1]
+
+connection: maze_d4-choke_d1 [max_link_capacity=1]
+connection: choke_d1-choke_d2 [max_link_capacity=1]
+connection: choke_d2-choke_d3 [max_link_capacity=1]
+
+connection: maze_s4-choke_s1 [max_link_capacity=1]
+connection: choke_s1-choke_s2 [max_link_capacity=1]
+connection: choke_s2-choke_s3 [max_link_capacity=1]
+
+# -------------------- CHOKE CROSS LINKS --------------------
+
+connection: choke_n2-choke_u2
+connection: choke_u2-choke_c2
+connection: choke_c2-choke_d2
+connection: choke_d2-choke_s2
+
+connection: choke_n1-choke_u1
+connection: choke_u1-choke_d1
+connection: choke_d1-choke_s1
+
+connection: choke_n3-choke_u3
+connection: choke_u3-choke_d3
+connection: choke_d3-choke_s3
+
+# -------------------- PARALLEL ROUTES --------------------
+
+connection: choke_n3-route_top1
+connection: route_top1-route_top2
+connection: route_top2-route_top3
+connection: route_top3-route_top4
+
+connection: choke_u3-route_high1
+connection: route_high1-route_high2
+connection: route_high2-route_high3
+connection: route_high3-route_high4
+
+connection: choke_c3-route_mid1
+connection: route_mid1-route_mid2
+connection: route_mid2-route_mid3
+connection: route_mid3-route_mid4
+
+connection: choke_d3-route_low1
+connection: route_low1-route_low2
+connection: route_low2-route_low3
+connection: route_low3-route_low4
+
+connection: choke_s3-route_bottom1
+connection: route_bottom1-route_bottom2
+connection: route_bottom2-route_bottom3
+connection: route_bottom3-route_bottom4
+
+# -------------------- ROUTE CROSSOVERS --------------------
+
+connection: route_top2-route_high2
+connection: route_high2-route_mid2
+connection: route_mid2-route_low2
+connection: route_low2-route_bottom2
+
+connection: route_top3-route_high3
+connection: route_high3-route_mid3
+connection: route_mid3-route_low3
+connection: route_low3-route_bottom3
+
+connection: route_top1-route_high1
+connection: route_high1-route_mid1
+connection: route_mid1-route_low1
+connection: route_low1-route_bottom1
+
+# -------------------- SPIDER WEB --------------------
+
+connection: route_top4-web_n1
+connection: web_n1-web_n2
+connection: web_n2-web_n3
+connection: web_n3-web_n4
+connection: web_n4-web_n5
+
+connection: route_high4-web_c1
+connection: web_c1-web_c2
+connection: web_c2-web_c3
+connection: web_c3-web_c4
+connection: web_c4-web_c5
+
+connection: route_mid4-web_s1
+connection: web_s1-web_s2
+connection: web_s2-web_s3
+connection: web_s3-web_s4
+connection: web_s4-web_s5
+
+connection: route_bottom4-web_bottom1
+connection: web_bottom1-web_bottom2
+connection: web_bottom2-web_bottom3
+connection: web_bottom3-web_bottom4
+connection: web_bottom4-web_bottom5
+
+# -------------------- WEB VERTICALS --------------------
+
+connection: web_n1-web_c1
+connection: web_n2-web_c2
+connection: web_n3-web_c3
+connection: web_n4-web_c4
+connection: web_n5-web_c5
+
+connection: web_c1-web_s1
+connection: web_c2-web_s2
+connection: web_c3-web_s3
+connection: web_c4-web_s4
+connection: web_c5-web_s5
+
+connection: web_s1-web_bottom1
+connection: web_s2-web_bottom2
+connection: web_s3-web_bottom3
+connection: web_s4-web_bottom4
+connection: web_s5-web_bottom5
+
+# -------------------- WEB DIAGONALS --------------------
+
+connection: web_n1-web_c2
+connection: web_n2-web_c3
+connection: web_n3-web_c4
+connection: web_n4-web_c5
+
+connection: web_c1-web_s2
+connection: web_c2-web_s3
+connection: web_c3-web_s4
+connection: web_c4-web_s5
+
+connection: web_s1-web_bottom2
+connection: web_s2-web_bottom3
+connection: web_s3-web_bottom4
+connection: web_s4-web_bottom5
+
+# -------------------- CONVERGENCE --------------------
+
+connection: web_n5-converge_n1
+connection: web_c5-converge_u1
+connection: web_s5-converge_d1
+connection: web_bottom5-converge_s1
+
+connection: web_n3-converge_n1
+connection: web_n4-converge_n2
+
+connection: web_c3-converge_u1
+connection: web_c4-converge_u2
+
+connection: web_s3-converge_d1
+connection: web_s4-converge_d2
+
+connection: web_bottom3-converge_s1
+connection: web_bottom4-converge_s2
+
+# -------------------- CONVERGENCE CROSS LINKS --------------------
+
+connection: converge_n1-converge_n2
+connection: converge_u1-converge_u2
+connection: converge_c1-converge_c2
+connection: converge_d1-converge_d2
+connection: converge_s1-converge_s2
+
+connection: converge_n2-converge_u2
+connection: converge_u2-converge_c2
+connection: converge_c2-converge_d2
+connection: converge_d2-converge_s2
+
+connection: converge_n1-converge_c1
+connection: converge_c1-converge_s1
+
+# -------------------- FINAL ROUTES --------------------
+
+connection: converge_n2-final_top1
+connection: final_top1-final_top2
+connection: final_top2-final_top3
+
+connection: converge_u2-final_high1
+connection: final_high1-final_high2
+connection: final_high2-final_high3
+
+connection: converge_c2-final_mid1
+connection: final_mid1-final_mid2
+connection: final_mid2-final_mid3
+
+connection: converge_d2-final_low1
+connection: final_low1-final_low2
+connection: final_low2-final_low3
+
+connection: converge_s2-final_bottom1
+connection: final_bottom1-final_bottom2
+connection: final_bottom2-final_bottom3
+
+# -------------------- FINAL CROSSOVERS --------------------
+
+connection: final_top2-final_high2
+connection: final_high2-final_mid2
+connection: final_mid2-final_low2
+connection: final_low2-final_bottom2
+
+connection: final_top1-final_high1
+connection: final_high1-final_mid1
+connection: final_mid1-final_low1
+connection: final_low1-final_bottom1
+
+connection: final_top3-final_high3
+connection: final_high3-final_mid3
+connection: final_mid3-final_low3
+connection: final_low3-final_bottom3
+
+# -------------------- FINAL BOTTLENECKS --------------------
+
+connection: final_top3-final_gate_n [max_link_capacity=1]
+connection: final_high3-final_gate_u [max_link_capacity=1]
+connection: final_mid3-final_gate_c [max_link_capacity=1]
+connection: final_low3-final_gate_d [max_link_capacity=1]
+connection: final_bottom3-final_gate_s [max_link_capacity=1]
+
+connection: final_gate_n-pre_goal_n [max_link_capacity=1]
+connection: final_gate_u-pre_goal_u [max_link_capacity=1]
+connection: final_gate_c-pre_goal_c [max_link_capacity=1]
+connection: final_gate_d-pre_goal_d [max_link_capacity=1]
+connection: final_gate_s-pre_goal_s [max_link_capacity=1]
+
+# -------------------- PRE-GOAL CONVERGENCE --------------------
+
+connection: pre_goal_n-pre_goal_u
+connection: pre_goal_u-pre_goal_c
+connection: pre_goal_c-pre_goal_d
+connection: pre_goal_d-pre_goal_s
+
+connection: pre_goal_n-pre_goal_c
+connection: pre_goal_u-pre_goal_d
+connection: pre_goal_c-pre_goal_s
+
+# -------------------- THE FINAL DOOR --------------------
+
+connection: pre_goal_n-impossible_goal [max_link_capacity=1]
+connection: pre_goal_u-impossible_goal [max_link_capacity=1]
+connection: pre_goal_c-impossible_goal [max_link_capacity=1]
+connection: pre_goal_d-impossible_goal [max_link_capacity=1]
+connection: pre_goal_s-impossible_goal [max_link_capacity=1]

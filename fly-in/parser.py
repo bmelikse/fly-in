@@ -81,13 +81,16 @@ def parse(path: str | None = None) -> Map:
                 if not line or line.startswith("#"):
                     continue
                 if line.startswith("nb_drones:"):
-                    world.nb_drones = int(line.removeprefix("nb_drones:").strip())
+                    world.nb_drones = int(
+                        line.removeprefix("nb_drones:").strip())
                 elif line.startswith("start_hub:"):
-                    zone = Zone.from_line(line.removeprefix("start_hub:").strip())
+                    zone = Zone.from_line(
+                        line.removeprefix("start_hub:").strip())
                     world.zones[zone.name] = zone
                     world.start = zone
                 elif line.startswith("end_hub:"):
-                    zone = Zone.from_line(line.removeprefix("end_hub:").strip())
+                    zone = Zone.from_line(
+                        line.removeprefix("end_hub:").strip())
                     world.zones[zone.name] = zone
                     world.end = zone
                 elif line.startswith("hub:"):
@@ -117,4 +120,3 @@ def split_metadata(line: str) -> tuple[str, dict[str, str]]:
             metadata[key] = value
 
     return fixed_part.strip(), metadata
-

@@ -6,12 +6,16 @@ from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from matplotlib.animation import FuncAnimation
 import math
 import numpy as np
+from matplotlib.lines import Line2D
 
-DRONE_ICON_PATH = "assets/drone3.png"
+
+DRONE_ICON_PATH = "assets/drone4.png"
 drone_icon = plt.imread(DRONE_ICON_PATH)
 _HSV_CMAP = plt.colormaps["hsv"]
 
 # runs once
+
+
 def build_coord_to_zone(world: Map) -> dict[tuple[float, float], str]:
     mapping: dict[tuple[float, float], str] = {}
     for zone_name in world.zones:
@@ -20,6 +24,8 @@ def build_coord_to_zone(world: Map) -> dict[tuple[float, float], str]:
     return mapping
 
 # v runs per frame
+
+
 def compute_occupancy(positions: dict[int, tuple[float, float]],
                       coord_to_zone: dict[tuple[float, float], str]) -> dict[str, int]:
     counts: dict[str, int] = {}
@@ -147,8 +153,8 @@ def draw_static_layout(axes, world: Map, hex_radius: float) -> list:
         label = axes.text(
             zone.x, zone.y - zone_label_offset,
             f"{zone.name}\n0/{zone.max_drones}",
-            ha="center", va="top", fontsize=6, fontweight="bold",
-            zorder=7
+            ha="center", va="top", fontsize=7, fontweight="bold",
+            zorder=5
         )
         zone_labels[zone.name] = label
     xs = [zone.x for zone in world.zones.values()]
@@ -160,6 +166,16 @@ def draw_static_layout(axes, world: Map, hex_radius: float) -> list:
     axes.set_xlim(min(xs) - padding, max(xs) + padding)
     axes.set_ylim(min(ys) - padding, max(ys) + top_padding)
     axes.set_autoscale_on(False)
+    legend_elements = [
+        Line2D([0], [0], color="black", linestyle="solid",
+               label="Normal connection"),
+        Line2D([0], [0], color="black", linestyle="dashed",
+               label="Restricted zone"),
+        Line2D([0], [0], color="indianred",
+               linestyle="-.", label="Priority zone")
+    ]
+    axes.legend(handles=legend_elements, loc="lower left",
+                fontsize=8, framealpha=0.9)
     return rainbow_zones, zone_labels
 
 
@@ -324,15 +340,8 @@ def animate_simulation(world: Map, history: list[dict[int, tuple[float, float]]]
         return updated_artists
     anim = FuncAnimation(fig, update, frames=len(history), interval=interval_ms,
                          repeat=False)
-    rainbow_anim = FuncAnimation(fig, update_rainbow, interval=50, blit=False)
+    rainbow_anim = FuncAnimation(
+        fig, update_rainbow, interval=50, cache_frame_data=False, blit=False)
     plt.show()
     plt.close('all')
     return anim, rainbow_anim
-# world = parse()
-# turns = simulate_all_drones(world)
-# history = build_position_history(world, turns)
-# drone_anim, rainbow_anim = animate_simulation(
-#     world,
-#     history,
-#     interval_ms=100
-# )
