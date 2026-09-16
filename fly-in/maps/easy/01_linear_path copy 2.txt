@@ -3,8 +3,8 @@ nb_drones: 8
 
 start_hub: start 0 0 [color=green max_drones=8]
 
-hub: bottleneck 2 0 [color=orange max_drones=8]
-hub: upper 4 1 [color=blue max_drones=8]
+hub: bottleneck 2 0 [color=orange ]
+hub: upper 4 1 [color=blue max_drones=8]max_drones=8
 hub: lower 4 -1 [color=rainbow max_drones=8]
 hub: merge 6 0 [color=yellow max_drones=8]
 
