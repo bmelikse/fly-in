@@ -10,13 +10,13 @@ from matplotlib.patches import RegularPolygon
 from matplotlib.text import Text
 import math
 import numpy as np
-from matplotlib import cm
+# from matplotlib import cm
 from parser import Map
 
 
 DRONE_ICON_PATH = "assets/drone.png"
 drone_icon = plt.imread(DRONE_ICON_PATH)
-_HSV_CMAP = cm.get_cmap("hsv")
+_HSV_CMAP = plt.colormaps["hsv"]
 
 # runs once
 
