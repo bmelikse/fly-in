@@ -593,6 +593,19 @@ def animate_simulation(
         blit=False
     )
 
+    rainbow_anim = FuncAnimation(
+        fig,
+        update_rainbow,
+        interval=50,
+        cache_frame_data=False,
+        blit=False
+    )
+
+    def on_close(event: Any) -> None:
+        anim.event_source.stop()
+        rainbow_anim.event_source.stop()
+
+    fig.canvas.mpl_connect("close_event", on_close)
+
     plt.show()
-    plt.close("all")
     return anim
