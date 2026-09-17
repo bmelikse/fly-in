@@ -1,7 +1,7 @@
 PY = python3
 MAIN = main.py
 MENU = menu.py
-CONFIG ?= maps/medium/02_circular_loop.txt
+CONFIG ?= maps/easy/01_linear_path.txt
 
 run:
 	$(PY) $(MAIN) $(CONFIG)

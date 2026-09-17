@@ -4,7 +4,7 @@ from parser import Map, Zone
 
 def neighbors_of(world: Map, zone_name: str) -> list[str]:
     """Return the names of all zones directly connected to zone_name."""
-    result = []
+    result: list[str] = []
     for connection in world.connections:
         if connection.zone_a == zone_name:
             result.append(connection.zone_b)
@@ -13,13 +13,19 @@ def neighbors_of(world: Map, zone_name: str) -> list[str]:
     return result
 
 
-def find_shortest_path(world: Map,
-                       usage: dict[str, int] | None = None,
-                       penalty: float = 0.003  # 0.03 gives 44 moves
-                       ) -> list[str] | None:
-    distances: dict[str, int] = {world.start.name: 0}
+def find_shortest_path(
+        world: Map,
+        usage: dict[str, int] | None = None,
+        penalty: float = 0.003
+        # 0.03 gives 44 moves
+        ) -> list[str] | None:
+    """Find the lowest-cost path from start to end."""
+    assert world.start is not None
+    assert world.end is not None
+
+    distances: dict[str, float] = {world.start.name: 0.0}
     previous: dict[str, str] = {}
-    queue: list[tuple[int, str]] = [(0, world.start.name)]
+    queue: list[tuple[float, str]] = [(0.0, world.start.name)]
 
     while queue:
         current_cost, current_zone = heapq.heappop(queue)
@@ -28,7 +34,7 @@ def find_shortest_path(world: Map,
 
         for neighbor_name in neighbors_of(world, current_zone):
             neighbor_zone = world.zones[neighbor_name]
-            cost = move_cost(neighbor_zone)
+            cost = float(move_cost(neighbor_zone))
             if cost == -1:
                 continue
             if usage is not None:
@@ -40,7 +46,9 @@ def find_shortest_path(world: Map,
             ):
                 distances[neighbor_name] = new_cost
                 previous[neighbor_name] = current_zone
-                heapq.heappush(queue, (new_cost, neighbor_name))
+                heapq.heappush(
+                    queue, (new_cost, neighbor_name)
+                )
 
     # no path existing
     if world.end.name not in previous:
@@ -57,6 +65,7 @@ def find_shortest_path(world: Map,
 
 
 def move_cost(zone: Zone) -> int:
+    """Return the number of turns needed to enter a zone."""
     if zone.zone_type == "blocked":
         return -1
     if zone.zone_type == "restricted":
@@ -65,14 +74,16 @@ def move_cost(zone: Zone) -> int:
 
 
 def assign_diverse_paths(world: Map) -> dict[int, list[str]]:
-    '''loop through all drones sequentially to build customized routes.'''
+    """Build customized routes by assigning paths sequentially."""
     usage: dict[str, int] = {}
     paths: dict[int, list[str]] = {}
 
     for drone_id in range(1, world.nb_drones + 1):
         path = find_shortest_path(world, usage)
         if path is None:
-            raise ValueError(f"No path exists for drone {drone_id}")
+            raise ValueError(
+                f"No path exists for drone {drone_id}"
+            )
         paths[drone_id] = path
 
         for zone_name in path:
