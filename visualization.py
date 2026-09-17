@@ -10,13 +10,13 @@ from matplotlib.patches import RegularPolygon
 from matplotlib.text import Text
 import math
 import numpy as np
-# from matplotlib import cm
+from matplotlib import cm
 from parser import Map
 
 
 DRONE_ICON_PATH = "assets/drone.png"
 drone_icon = plt.imread(DRONE_ICON_PATH)
-_HSV_CMAP = plt.colormaps["hsv"]
+_HSV_CMAP = cm.get_cmap("hsv")
 
 # runs once
 
@@ -255,6 +255,27 @@ def draw_static_layout(
             )
             axes.add_patch(hexagon)
 
+        if zone.zone_type == "blocked":
+            cross_color = (
+                "white" if color.lower() == "black" else "black"
+            )
+            cross_size = hex_radius * 0.55
+
+            axes.plot(
+                [zone.x - cross_size, zone.x + cross_size],
+                [zone.y - cross_size, zone.y + cross_size],
+                color=cross_color,
+                linewidth=4,
+                zorder=4
+            )
+            axes.plot(
+                [zone.x - cross_size, zone.x + cross_size],
+                [zone.y + cross_size, zone.y - cross_size],
+                color=cross_color,
+                linewidth=4,
+                zorder=4
+            )
+
         capacity = (
             "inf"
             if zone in (world.start, world.end)
@@ -277,16 +298,19 @@ def draw_static_layout(
     axes.set_aspect("equal")
     axes.axis("off")
     padding = 0.4
+
+    bottom_padding = padding + hex_radius + 0.15
     top_padding = padding + max(
         0.8,
         (max(ys) - min(ys)) * 0.05
     )
+
     axes.set_xlim(
         min(xs) - padding,
         max(xs) + padding
     )
     axes.set_ylim(
-        min(ys) - padding,
+        min(ys) - bottom_padding,
         max(ys) + top_padding
     )
     axes.set_autoscale_on(False)
@@ -312,13 +336,23 @@ def draw_static_layout(
             color="indianred",
             linestyle="-.",
             label="Priority zone"
+        ),
+        Line2D(
+            [0],
+            [0],
+            color="black",
+            marker="x",
+            markersize=9,
+            markeredgewidth=3,
+            linestyle="None",
+            label="Blocked zone"
         )
     ]
     axes.legend(
         handles=legend_elements,
         loc="lower center",
         bbox_to_anchor=(0.5, 1.01),
-        ncol=3,
+        ncol=4,
         fontsize=8,
         framealpha=0.9
     )
@@ -425,7 +459,7 @@ def animate_simulation(
         history: list[dict[int, tuple[float, float]]],
         level: str,
         map_name: str,
-        interval_ms: int = 750
+        interval_ms: int = 1500
         ) -> FuncAnimation:
     """Animate the simulated drone movements."""
     assert world.start is not None
@@ -477,6 +511,8 @@ def animate_simulation(
 
     manager = plt.get_current_fig_manager()
     manager.set_window_title("FLY-IN SIMULATION")
+    if hasattr(manager, "window"):
+        manager.window.report_callback_exception = lambda *args: None
 
     fig.subplots_adjust(
         left=0.02,
@@ -585,14 +621,6 @@ def animate_simulation(
         repeat=False
     )
 
-    _ = FuncAnimation(
-        fig,
-        update_rainbow,
-        interval=50,
-        cache_frame_data=False,
-        blit=False
-    )
-
     rainbow_anim = FuncAnimation(
         fig,
         update_rainbow,
@@ -602,8 +630,14 @@ def animate_simulation(
     )
 
     def on_close(event: Any) -> None:
-        anim.event_source.stop()
-        rainbow_anim.event_source.stop()
+        try:
+            anim.pause()
+        except AttributeError:
+            pass
+        try:
+            rainbow_anim.pause()
+        except AttributeError:
+            pass
 
     fig.canvas.mpl_connect("close_event", on_close)
 

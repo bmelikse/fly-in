@@ -13,7 +13,12 @@ if __name__ == "__main__":
         print(f"Error: {e}")
         exit(1)
 
-    turns = simulate_all_drones(world)
+    try:
+        turns = simulate_all_drones(world)
+    except ValueError as error:
+        print(f"Error: {error}")
+        exit(1)
+
     for turn in turns:
         print(" ".join(turn))
     print(f"Total turns: {len(turns)}")

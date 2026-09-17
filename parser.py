@@ -1,6 +1,6 @@
 from sys import argv
 
-VALID_ZONE_TYPES = {"normal", "restricted", "priority"}
+VALID_ZONE_TYPES = {"normal", "restricted", "priority", "blocked"}
 
 
 class MapParseError(Exception):

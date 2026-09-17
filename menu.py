@@ -79,7 +79,11 @@ def run_once() -> None:
         print(f"Error: {e}")
         return
 
-    turns = simulate_all_drones(world)
+    try:
+        turns = simulate_all_drones(world)
+    except ValueError as error:
+        print(f"Error: {error}")
+        return
     for turn in turns:
         print(" ".join(turn))
     print(f"Total turns: {len(turns)}")

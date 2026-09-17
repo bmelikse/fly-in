@@ -1,12 +1,12 @@
 *This project has been created as part of the 42 curriculum by bmelikse.*
 
-# 🛰️ fly-in
+# 🛰️ Fly-in
 
 Multi-drone pathfinding and scheduling on a zone graph - with a live matplotlib
 visualization of the whole simulation in flight.
 
 <p align="center">
-  <img src="assets/demo_impossible.gif" width="800" alt="fly-in visualization demo — challenger map" />
+  <img src="assets/demo-impossible.gif" width="800" alt="Fly-in visualization demo — challenger map" />
 </p>
 
 ---
@@ -14,7 +14,6 @@ visualization of the whole simulation in flight.
 ## Table of Contents
 
 - [Description](#description)
-- [Scorecard](#scorecard)
 - [Instructions](#instructions)
 - [Map file format](#map-file-format)
 - [Example](#example)
@@ -27,7 +26,7 @@ visualization of the whole simulation in flight.
 
 ## Description
 
-**fly-in** simulates a fleet of delivery drones moving through a network of
+**Fly-in** simulates a fleet of delivery drones moving through a network of
 zones (hubs) toward a shared destination, under real constraints: limited
 capacity per zone, limited capacity per connection, restricted zones that cost
 extra time to cross, and a shared graph that every drone competes for at once.
@@ -45,31 +44,38 @@ share the same core logic:
 - a **graphical visualization** built with `matplotlib`, animating every
   drone's movement across the zone graph turn by turn.
 
-## Scorecard
 
-Fill in the actual numbers from your defense below.
+## Results
 
-### Mandatory
+| Difficulty | Map | Drones | Subject target | My result |
+|---|---|---:|---:|---:|
+| Easy | Linear path | 2 | ≤ 6 turns | **4 turns** |
+| Easy | Simple fork | 4 | ≤ 8 turns | **6 turns** |
+| Easy | Basic capacity | 4 | ≤ 6 turns | **6 turns** |
+| Medium | Dead end trap | 5 | ≤ 12 turns | **8 turns** |
+| Medium | Circular loop | 6 | ≤ 15 turns | **15 turns** |
+| Medium | Priority puzzle | 5 | ≤ 12 turns | **8 turns** |
+| Hard | Maze nightmare | 8 | ≤ 30 turns | **13 turns** |
+| Hard | Capacity hell | 12 | ≤ 35 turns | **16 turns** |
+| Hard | Ultimate challenge | 15 | ≤ 45 turns | **26 turns** |
+| Challenger | The Impossible Dream | 25 | **< 45 turns** | **43 turns** |
 
-| Requirement | Expected | Achieved |
-| --- | --- | --- |
-| Map parsing (custom, no graph libs) | ✅ | |
-| Shortest-path algorithm (Dijkstra, custom) | ✅ | |
-| Multi-drone scheduling under capacity constraints | ✅ | |
-| Terminal/log output matching the specified format | ✅ | |
-| Visual representation (terminal colors and/or GUI) | ✅ | |
-| Clean error handling for malformed input | ✅ | |
-| flake8 / mypy clean | ✅ | |
-| README with required sections | ✅ | |
-| **Total** | **100** | |
+### Difficulty averages
+
+| Difficulty | Subject target | My average |
+|---|---:|---:|
+| Easy | < 10 turns | **5.3 turns** |
+| Medium | 10-30 turns | **10.3 turns** |
+| Hard | < 60 turns | **18.3 turns** |
 
 ### Bonus
 
-| Requirement | Expected | Achieved |
-| --- | --- | --- |
-| Diverse routing / congestion-aware rerouting | ✅ | |
-| Challenger map (25 drones) solved in ≤ 45 turns | ✅ | |
-| **Total** | **/** | |
+| Bonus requirement | Subject target | My result |
+|---|---|---:|
+| Exceptional Performance - Easy maps | Meet all reference targets | **3 / 3** |
+| Exceptional Performance - Medium maps | Meet all reference targets | **3 / 3** |
+| Exceptional Performance - Hard maps | Meet all reference targets | **3 / 3** |
+| Challenger - The Impossible Dream | Beat 45 turns | **43 turns** |
 
 ## Instructions
 
@@ -78,13 +84,13 @@ Fill in the actual numbers from your defense below.
 - Python 3.10+
 - `matplotlib`, `numpy`
 
-### Installation
+<!-- ### Installation
 
 ```bash
 git clone <your_repo_url>
 cd fly-in
 make install
-```
+``` -->
 
 ### Running
 
@@ -158,24 +164,29 @@ connection).
 
 ## Algorithm
 
-- **Parsing** — `parser.py` reads the map file line by line into `Zone`,
-  `Connection`, and `Map` objects, validating structure and metadata as it
-  goes (see [Error handling](#error-handling)).
-- **Pathfinding** — `pathfinding.py` implements Dijkstra's algorithm from
-  scratch (`find_shortest_path`) to get each drone's baseline shortest route
-  from `start_hub` to `end_hub`.
-- **Diverse routing (bonus)** — `assign_diverse_paths` reruns Dijkstra per
-  drone with a small congestion penalty added to the cost of already-used
-  edges, so drones naturally spread across alternative routes instead of all
-  queueing on the single globally-shortest path.
-- **Scheduling** — `simulation.py`'s `simulate_all_drones` advances every
-  drone simultaneously, turn by turn: departures free up connection/zone
-  capacity before that same turn's arrivals are evaluated, and when multiple
-  drones contend for the same limited capacity, the drone that has been
-  waiting longest gets priority. Drones keep their precomputed path and wait
-  when blocked rather than rerouting mid-flight.
-- On the 25-drone challenger map, this scheduler consistently completes in
-  43 turns - under the 45-turn bonus target.
+### Parsing
+
+`parser.py` reads each map file line by line into `Zone`, `Connection`, and `Map` objects, validating structure and metadata as it goes.
+
+### Pathfinding
+
+`pathfinding.py` implements Dijkstra's algorithm from scratch through `find_shortest_path`, calculating a baseline shortest route from `start_hub` to `end_hub`.
+
+### Diverse routing
+
+`assign_diverse_paths` reruns Dijkstra for each drone with a small congestion penalty added to the cost of already-used edges. This encourages drones to spread across alternative routes instead of all queueing on the same globally shortest path.
+
+### Scheduling
+
+`simulation.py`'s `simulate_all_drones` advances every drone simultaneously, turn by turn.
+
+Departures free up connection and zone capacity before arrivals for the same turn are evaluated. When multiple drones contend for the same limited capacity, the drone that has been waiting longest gets priority.
+
+Drones keep their precomputed path and wait when blocked rather than rerouting mid-flight.
+
+On the 25-drone challenger map, this scheduler consistently completes in **43 turns**, under the 45-turn bonus target.
+
+---
 
 ## Visual representation
 
@@ -196,7 +207,7 @@ connection).
 - a legend above the map explains the zone/connection styling.
 
 <p align="center">
-  <img src="assets/demo_easy.gif" width="600" alt="fly-in visualization demo — easy map" />
+  <img src="assets/demo-easy.gif" width="600" alt="Fly-in visualization demo - easy map" />
 </p>
 
 ## Error handling
@@ -213,20 +224,44 @@ The interactive menu (`menu.py`) also validates every input: an out-of-range
 or non-numeric selection re-prompts instead of crashing, and `q` is always
 available to quit cleanly from the difficulty and map-selection prompts.
 
+---
+
 ## Resources
 
-- [Dijkstra's algorithm - Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
-- [matplotlib animation API](https://matplotlib.org/stable/api/animation_api.html)
-- [matplotlib `RegularPolygon` patches](https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.RegularPolygon.html)
+### Books
 
-**AI usage:** Claude (Anthropic) was used throughout development as a
-debugging and design-review partner — never to generate the core algorithm
-from scratch. Specifically, it was used to: review and refine the
-`matplotlib`-based visualization (zone/marker sizing, label placement, the
-animated rainbow-zone rendering, drone icon scaling, HUD/legend layout);
-diagnose and fix rendering and runtime bugs (icon/hexagon size mismatches
-across map scales, a Tkinter teardown crash from duplicate animation timers);
-design the malformed-input error-handling strategy in `parser.py`; and
-structure the two-entry-point (`main.py` / `menu.py`) split plus the
-accompanying `Makefile`. The pathfinding, scheduling, and parsing logic
-itself was designed and implemented independently.
+* [Grokking Algorithms — Aditya Y. Bhargava](https://www.manning.com/books/grokking-algorithms) — used as a reference for algorithms and especially graph algorithms such as Dijkstra's algorithm.
+
+### Documentation
+
+* [Python Documentation](https://docs.python.org/3/)
+* [Python Tutorial](https://docs.python.org/3.10/tutorial/) — Python language and programming reference.
+* [Matplotlib Animation API](https://matplotlib.org/stable/api/animation_api.html) — reference for `FuncAnimation` and animation handling.
+* [Matplotlib Animation Examples](https://matplotlib.org/stable/gallery/animation/index.html)
+* [Matplotlib `RegularPolygon`](https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.RegularPolygon.html)
+
+### Algorithms
+
+* [Dijkstra's algorithm — Wikipedia](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+* [Dijkstra's algorithm in 3 minutes — YouTube](https://www.youtube.com/watch?v=_lHSawdgXpI)
+* [YouTube — Algorithm / graph reference](https://www.youtube.com/watch?v=EFg3u_E6eHU&t=217s)
+* [YouTube — Algorithm / graph reference](https://www.youtube.com/watch?v=bZkzH5x0SKU&t=74s)
+
+
+## AI usage
+
+AI tools were used as development and debugging assistants during the project.
+
+**Claude** and **Google Gemini** were used for:
+
+* debugging Python and Matplotlib issues;
+* reviewing and explaining new concepts;
+* investigating runtime and specific rendering problems;
+* understanding library documentation and API behavior;
+* reviewing error-handling approaches;
+* discussing project structure and implementation ideas.
+* helping to polish the README
+
+AI was **not used to generate the core pathfinding or scheduling algorithms from scratch**. The pathfinding, scheduling, parsing logic, and their final implementation were designed and implemented by the author.
+
+The final code was reviewed, tested, and adapted manually to fit the project requirements and constraints.
