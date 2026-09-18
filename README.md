@@ -15,6 +15,7 @@ visualization of the whole simulation in flight.
 
 - [Description](#description)
 - [Instructions](#instructions)
+- [Installation](#installation)
 - [Map file format](#map-file-format)
 - [Example](#example)
 - [Algorithm](#algorithm)
@@ -84,13 +85,14 @@ share the same core logic:
 - Python 3.10+
 - `matplotlib`, `numpy`
 
-<!-- ### Installation
+### Installation
 
+
+<!-- git clone <your_repo_url>
+cd fly-in -->
 ```bash
-git clone <your_repo_url>
-cd fly-in
 make install
-``` -->
+```
 
 ### Running
 
