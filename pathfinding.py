@@ -17,7 +17,6 @@ def find_shortest_path(
         world: Map,
         usage: dict[str, int] | None = None,
         penalty: float = 0.003
-        # 0.03 gives 44 moves
         ) -> list[str] | None:
     """Find the lowest-cost path from start to end."""
     assert world.start is not None
@@ -50,7 +49,6 @@ def find_shortest_path(
                     queue, (new_cost, neighbor_name)
                 )
 
-    # no path existing
     if world.end.name not in previous:
         return None
 

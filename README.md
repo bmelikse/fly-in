@@ -138,7 +138,7 @@ connection: waypoint2-goal
 - `#` starts a comment line.
 - `nb_drones` sets the fleet size.
 - Each zone line gives a name and `x y` coordinates, plus optional metadata
-  in `[key=value ...]` — `zone` (`normal` / `restricted` / `priority`),
+  in `[key=value ...]` — `zone` (`normal` / `restricted` / `priority` / `blocked`),
   `max_drones`, `color`.
 - Each `connection` line links two zones by name, with an optional
   `max_link_capacity`.

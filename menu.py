@@ -13,6 +13,7 @@ class MenuQuit(Exception):
 
 
 def prompt_choice(options: list[str]) -> int:
+    """Print numbered options plus a quit option & return the chosen index."""
     for i, option in enumerate(options, start=1):
         print(f"  {i}. {option}")
     print("  q. Quit")
@@ -37,12 +38,14 @@ def prompt_choice(options: list[str]) -> int:
 
 
 def choose_difficulty() -> str:
+    """Prompt the user to pick a difficulty level."""
     print("Choose difficulty:")
     choice = prompt_choice(DIFFICULTIES)
     return DIFFICULTIES[choice - 1]
 
 
 def choose_map(level: str) -> Path:
+    """Prompt the user to pick a map file within the given difficulty."""
     level_dir = MAPS_DIR / level
     try:
         entries = list(level_dir.iterdir())
@@ -70,6 +73,7 @@ def choose_map(level: str) -> Path:
 
 
 def run_once() -> None:
+    """Run a single parse-simulate-print-visualize cycle for one chosen map."""
     level = choose_difficulty()
     map_path = choose_map(level)
 
@@ -95,6 +99,7 @@ def run_once() -> None:
 
 
 def main() -> None:
+    """Repeatedly run the menu until the user quits."""
     while True:
         try:
             run_once()

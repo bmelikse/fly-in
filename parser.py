@@ -8,6 +8,8 @@ class MapParseError(Exception):
 
 
 class Map:
+    """Hold the full parsed state of a map: drones, zones, and connections."""
+
     def __init__(self,
                  nb_drones: int = 0,
                  start: "Zone | None" = None,
@@ -15,6 +17,7 @@ class Map:
                  zones: dict[str, "Zone"] | None = None,
                  connections: list["Connection"] | None = None
                  ) -> None:
+        """Initialize an empty or pre-filled map."""
         self.nb_drones = nb_drones
         self.start = start
         self.end = end
@@ -25,6 +28,8 @@ class Map:
 
 
 class Zone:
+    """A single named zone in the map, with position, type, and capacity."""
+
     def __init__(self,
                  name: str,
                  zone_type: str = "normal",
@@ -33,6 +38,7 @@ class Zone:
                  y: int = 0,
                  color: str | None = None
                  ) -> None:
+        """Initialize a zone with its attributes."""
         self.name = name
         self.zone_type = zone_type
         self.max_drones = max_drones
@@ -42,6 +48,7 @@ class Zone:
 
     @classmethod
     def from_line(cls, line: str) -> "Zone":
+        """Parse one zone definition line into a Zone."""
         fixed_part, metadata = split_metadata(line)
         parts = fixed_part.split()
         if len(parts) != 3:
@@ -68,17 +75,21 @@ class Zone:
 
 
 class Connection:
+    """A bidirectional link between two zones, with a capacity limit."""
+
     def __init__(self,
                  zone_a: str,
                  zone_b: str,
                  max_link_capacity: int = 1
                  ) -> None:
+        """Initialize a connection between two named zones."""
         self.zone_a = zone_a
         self.zone_b = zone_b
         self.max_link_capacity = max_link_capacity
 
     @classmethod
     def from_line(cls, line: str) -> 'Connection':
+        """Parse one connection definition line into a Connection."""
         fixed_part, metadata = split_metadata(line)
         if "-" not in fixed_part:
             raise ValueError(f"expected 'zoneA-zoneB', got '{fixed_part}'")
@@ -147,6 +158,8 @@ def parse(path: str | None = None) -> Map:
 
 
 def validate(world: Map) -> None:
+    """Check that the parsed map is structurally valid,
+    raising MapParseError if not."""
     if world.nb_drones <= 0:
         raise MapParseError("nb_drones must be set and greater than 0")
     if world.start is None:

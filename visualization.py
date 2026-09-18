@@ -635,6 +635,7 @@ def animate_simulation(
     )
 
     def on_close(event: Any) -> None:
+        """Stop both animation timers when the window is closed."""
         try:
             anim.pause()
         except AttributeError:
