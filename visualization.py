@@ -11,6 +11,7 @@ import math
 import numpy as np
 import matplotlib as mpl
 from parser import Map
+from matplotlib.artist import Artist
 
 
 DRONE_ICON_PATH = "assets/drone.png"
@@ -509,9 +510,10 @@ def animate_simulation(
     )
 
     manager = plt.get_current_fig_manager()
-    manager.set_window_title("FLY-IN SIMULATION")
-    if hasattr(manager, "window"):
-        manager.window.report_callback_exception = lambda *args: None
+    if manager is not None:
+        manager.set_window_title("FLY-IN SIMULATION")
+        if hasattr(manager, "window"):
+            manager.window.report_callback_exception = lambda *args: None
 
     fig.subplots_adjust(
         left=0.02,
@@ -536,7 +538,7 @@ def animate_simulation(
         drone_artists[drone_id] = annotation
         drone_labels[drone_id] = label
 
-    def update(frame_index: int) -> None:
+    def update(frame_index: int) -> list[Artist]:
         """Update drone positions and simulation labels."""
         positions = history[frame_index]
         occupancy = compute_occupancy(
@@ -591,7 +593,11 @@ def animate_simulation(
             drone_labels[drone_id].set_position(
                 (x, y + label_offset)
             )
-
+        updated: list[Artist] = [delivered_label, turn_label]
+        updated.extend(zone_labels.values())
+        updated.extend(drone_artists.values())
+        updated.extend(drone_labels.values())
+        return updated
     rainbow_offset: dict[str, float] = {"value": 0.0}
 
     def update_rainbow(frame_index: int) -> list[Any]:
