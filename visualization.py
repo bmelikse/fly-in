@@ -1,5 +1,4 @@
 from typing import Any, cast
-
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -10,13 +9,13 @@ from matplotlib.patches import RegularPolygon
 from matplotlib.text import Text
 import math
 import numpy as np
-from matplotlib import cm
+import matplotlib as mpl
 from parser import Map
 
 
 DRONE_ICON_PATH = "assets/drone.png"
 drone_icon = plt.imread(DRONE_ICON_PATH)
-_HSV_CMAP = cm.get_cmap("hsv")
+_HSV_CMAP = mpl.colormaps["hsv"]
 
 # runs once
 
